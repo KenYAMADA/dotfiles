@@ -102,8 +102,6 @@ alias ..="cd .."
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
 
-alias showenv="echo $PATH | sed -e 's/:/\n/g'"
-
 # グローバルエイリアス
 alias -g ...="cd ../.."
 alias -g C='| wc -l'

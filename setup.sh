@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOTPATH=$HOME/dotfiles
-DOT_FILES=(.zshrc .zshenv .vimrc)
+DOT_FILES=(.bin .zshrc .zshenv .vimrc)
 
 for file in ${DOT_FILES[@]}
 do
