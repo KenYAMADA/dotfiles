@@ -28,3 +28,6 @@ case ${OSTYPE} in
     ;;
 esac
 
+# Google Cloud SDK install
+# https://cloud.google.com/sdk/docs/downloads-interactive?hl=ja#interactive_installation
+curl https://sdk.cloud.google.com | bash
