@@ -31,3 +31,8 @@ esac
 # Google Cloud SDK install
 # https://cloud.google.com/sdk/docs/downloads-interactive?hl=ja#interactive_installation
 curl https://sdk.cloud.google.com | bash
+
+# Firebase CLI
+# https://firebase.google.com/docs/cli#windows-standalone-binary
+## node環境に入れる 
+## npm install -g firebase-tools

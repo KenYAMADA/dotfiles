@@ -133,9 +133,6 @@ export PYENV_ROOT=$HOME/.pyenv
 export PATH=$PYENV_ROOT/bin:$PATH
 eval "$(pyenv init --path)"
 
-## nodebrew
-#export PATH=$HOME/.nodebrew/current/bin:$PATH
-
 ## nodenv
 export NODE_ROOT=$HOME/.nodenv
 export PATH=$NODE_ROOT/bin:$PATH
