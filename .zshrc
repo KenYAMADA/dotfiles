@@ -143,6 +143,9 @@ export GOENV_ROOT=$HOME/.goenv
 export PATH=$GOENV_ROOT/bin:$PATH
 eval "$(goenv init -)"
 
+## Rust
+export PATH=$HOME/.cargo/bin:$PATH
+
 ## Flutter
 export PATH=$HOME/development/flutter/bin:$PATH
 
