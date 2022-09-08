@@ -39,11 +39,11 @@ fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 # コマンドの自動サジェスト機能
 # % brew install zsh-autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # コマンドのシンタックスハイライト機能
 # % brew install zsh-syntax-highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ###########
 # vcs_info
@@ -126,7 +126,7 @@ case ${OSTYPE} in
 esac
 
 ## Java
-export JAVA_HOME=`/usr/libexec/java_home -v 11`
+#export JAVA_HOME=`/usr/libexec/java_home -v 11`
 
 ## pyenv
 export PYENV_ROOT=$HOME/.pyenv
@@ -137,6 +137,11 @@ eval "$(pyenv init --path)"
 export NODE_ROOT=$HOME/.nodenv
 export PATH=$NODE_ROOT/bin:$PATH
 eval "$(nodenv init -)"
+
+## rbenv
+[[ -d ~/.rbenv  ]] && \
+  export PATH=${HOME}/.rbenv/bin:${PATH} && \
+  eval "$(rbenv init -)"
 
 ## goenv
 export GOENV_ROOT=$HOME/.goenv
