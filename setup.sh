@@ -22,6 +22,10 @@ case ${OSTYPE} in
     ## https://cloud.google.com/sql/docs/mysql/sql-proxy?hl=ja#install
     curl -o ~/.bin/cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
     chmod +x ~/.bin/cloud_sql_proxy
+    ## .DS_Storeを作成しない。
+    ## Falseで元に戻せます。
+    defaults write com.apple.desktopservices DSDontWriteNetworkStores True
+    killall Finder
     ;;
   linux*)
     # Linux用の設定
