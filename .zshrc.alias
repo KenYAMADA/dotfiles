@@ -1,0 +1,47 @@
+alias vi='vim'
+
+# https://www.task-notes.com/entry/20141223/1419324649
+alias brew="env PATH=${PATH/~\/\.pyenv\/shims:/} brew"
+
+alias l='exa -F'
+alias la='exa -aa -F'
+alias ll='exa -l -F -aa -h -@ -m --icons --git --time-style=long-iso --color=automatic --group-directories-first'
+
+alias ls='ls -G'
+
+# sudo の後のコマンドでエイリアスを有効にする
+alias sudo='sudo '
+
+alias python='python3'
+
+alias zenn="npx zenn"
+
+alias compose="docker compose"
+
+# Always enable colored `grep` output
+# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias mkdir='mkdir -p'
+
+# Easier navigation: .., ..., ...., .....
+alias ..="cd .."
+
+# sudo の後のコマンドでエイリアスを有効にする
+alias sudo='sudo '
+
+# グローバルエイリアス
+alias -g ...="cd ../.."
+alias -g C='| wc -l'
+alias -g G='| egrep'
+alias -g L='| less'
+alias -g S='| sort'
+alias -g T='| tail'
+alias -g X='| xargs'
+

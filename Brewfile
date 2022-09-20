@@ -7,16 +7,18 @@ brew 'heroku'
 
 brew 'awscli'
 
+brew 'tree'
 brew 'mackup'
 brew 'pngquant'
 brew 'exa'
 brew 'trash'
 brew 'vim'
 
-brew 'goenv'
-brew 'nodenv'
-brew 'pyenv'
-brew 'rbenv'
+brew 'anyenv'
+#brew 'goenv'
+#brew 'nodenv'
+#brew 'pyenv'
+#brew 'rbenv'
 
 brew 'zsh-autosuggestions'
 brew 'zsh-syntax-highlighting'
@@ -41,3 +43,4 @@ cask 'transmit'
 brew 'mas'
 mas 'Kindle', id: 405399194
 mas 'LINE', id: 539883307
+mas "RunCat", id: 1429033973

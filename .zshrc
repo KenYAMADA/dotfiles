@@ -60,6 +60,9 @@ function _update_vcs_info_msg() {
 add-zsh-hook precmd _update_vcs_info_msg
 
 ###########
+
+source ~/dotfiles/.zshrc.alias
+
 # Options
 
 setopt print_eight_bit  # 日本語ファイル名を表示可能にする
@@ -70,47 +73,6 @@ setopt share_history  # 同時に起動したzshの間でヒストリを共有�
 setopt hist_ignore_all_dups  # 同じコマンドをヒストリに残さない
 setopt hist_ignore_space  # スペースから始まるコマンド行はヒストリに残さない
 setopt hist_reduce_blanks  # ヒストリに保存するときに余分なスペースを削除する
-
-##########
-# Aliases
-
-# https://www.task-notes.com/entry/20141223/1419324649
-alias brew="env PATH=${PATH/~\/\.pyenv\/shims:/} brew"
-
-# https://wonderwall.hatenablog.com/entry/2017/08/07/222350
-alias ls='exa'
-alias ll='exa -hl --git'
-alias la='exa -ahl --git'
-
-alias vi='vim'
-
-# Always enable colored `grep` output
-# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
-alias mkdir='mkdir -p'
-
-# Easier navigation: .., ..., ...., .....
-alias ..="cd .."
-
-# sudo の後のコマンドでエイリアスを有効にする
-alias sudo='sudo '
-
-# グローバルエイリアス
-alias -g ...="cd ../.."
-alias -g C='| wc -l'
-alias -g G='| egrep'
-alias -g L='| less'
-alias -g S='| sort'
-alias -g T='| tail'
-alias -g X='| xargs'
-
 ########################################
 # OS 別の設定
 case ${OSTYPE} in
@@ -128,25 +90,36 @@ esac
 ## Java
 export JAVA_HOME=`/usr/libexec/java_home -v 11`
 
+## anyenv
+if [ -e "$HOME/.anyenv" ]
+then
+    export ANYENV_ROOT="$HOME/.anyenv"
+    export PATH="$ANYENV_ROOT/bin:$PATH"
+    if command -v anyenv 1>/dev/null 2>&1
+    then
+        eval "$(anyenv init -)"
+    fi
+fi
+
 ## pyenv
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval "$(pyenv init --path)"
+#export PYENV_ROOT=$HOME/.pyenv
+#export PATH=$PYENV_ROOT/bin:$PATH
+#eval "$(pyenv init --path)"
 
 ## nodenv
-export NODE_ROOT=$HOME/.nodenv
-export PATH=$NODE_ROOT/bin:$PATH
-eval "$(nodenv init -)"
+#export NODE_ROOT=$HOME/.nodenv
+#export PATH=$NODE_ROOT/bin:$PATH
+#eval "$(nodenv init -)"
 
 ## rbenv
-[[ -d ~/.rbenv  ]] && \
-  export PATH=${HOME}/.rbenv/bin:${PATH} && \
-  eval "$(rbenv init -)"
+#[[ -d ~/.rbenv  ]] && \
+#  export PATH=${HOME}/.rbenv/bin:${PATH} && \
+#  eval "$(rbenv init -)"
 
 ## goenv
-export GOENV_ROOT=$HOME/.goenv
-export PATH=$GOENV_ROOT/bin:$PATH
-eval "$(goenv init -)"
+#export GOENV_ROOT=$HOME/.goenv
+#export PATH=$GOENV_ROOT/bin:$PATH
+#eval "$(goenv init -)"
 
 ## Rust
 export PATH=$HOME/.cargo/bin:$PATH

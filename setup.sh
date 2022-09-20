@@ -16,8 +16,14 @@ case ${OSTYPE} in
     # Mac用の設定
     ## .DS_Storeを作成しない。
     defaults write com.apple.desktopservices DSDontWriteNetworkStores True
-    killall Finder
-    # mac packege init
+    ## screenshot
+    defaults write com.apple.screencapture name "ss"
+    mkdir $HOME/Pictures/ScreenShots/
+    defaults write com.apple.screencapture location $HOME/Pictures/ScreenShots/
+    defaults write com.apple.dock springboard-columns -int 10;defaults write com.apple.dock springboard-rows -int 6;defaults write com.apple.dock ResetLaunchPad -bool TRUE;killall Dock
+    ## anyenv setting
+    git clone https://github.com/anyenv/anyenv ~/.anyenv
+    ## mac packege init
     bash $DOTPATH/mac_init.sh
     ;;
   linux*)

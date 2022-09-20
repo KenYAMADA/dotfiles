@@ -22,9 +22,7 @@ which brew >/dev/null 2>&1 && brew update
 
 echo "ok. run brew upgrade ..."
 brew upgrade
-
 brew bundle
-
 brew cleanup
 
 ## iTerm shell integration
@@ -36,4 +34,19 @@ curl -L https://iterm2.com/misc/install_shell_integration.sh | bash
 ## https://cloud.google.com/sql/docs/mysql/sql-proxy?hl=ja#install
 curl -o ~/.bin/cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
 chmod +x ~/.bin/cloud_sql_proxy
+
+## vim plugin
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+## anyenv setup
+# install rbenv pyenv nodenv
+anyenv install --init
+anyenv install rbenv
+anyenv install pyenv
+anyenv install nodenv
+anyenv install go
+exec $SHELL -l
+
+# config
+mkdir -p $HOME/.config/gh & ln -s $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
 
