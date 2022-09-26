@@ -34,8 +34,8 @@ compinit
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
                    /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 
-fpath=(/usr/local/share/zsh-completions $fpath)
-fpath=(/usr/local/share/zsh/site-functions $fpath)
+fpath=(/opt/homebrew/share/zsh-completions $fpath)
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 
 # コマンドの自動サジェスト機能
 # % brew install zsh-autosuggestions
