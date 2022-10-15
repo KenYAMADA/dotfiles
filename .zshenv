@@ -39,7 +39,13 @@ case ${OSTYPE} in
 esac
 
 ## Java
-export JAVA_HOME=`/usr/libexec/java_home -v 11`
+case ${OSTYPE} in
+  darwin*)
+    export JAVA_HOME=`/usr/libexec/java_home -v 11`
+    ;;
+  Linux*)
+    ;;
+esac
 
 ## anyenv
 if [ -e "$HOME/.anyenv" ]
