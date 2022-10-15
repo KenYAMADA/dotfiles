@@ -6,14 +6,21 @@ DOT_FILES=(.bin .zshrc .zshenv .vimrc)
 ## zsh setup
 case ${OSTYPE} in
   darwin*)
+    echo "Set zsh"
+    chsh -s /bin/zsh
+    echo "Install xcode"
+    xcode-select --install > /dev/null
     echo "installing Homebrew ..."
     which brew >/dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    echo "run brew doctor ..."
+    which brew >/dev/null 2>&1 && brew doctor
     echo "run brew update ..."
     which brew >/dev/null 2>&1 && brew update
-    echo "run brew upgrade ..."
-    which brew >/dev/null 2>&1 && brew upgrade
-    echo "install wget"
-    which brew >/dev/null 2>&1 && brew install wget
+    echo "ok. run brew upgrade ..."
+    brew upgrade
+    brew bundle
+    brew cleanup
+
     # Mac用の設定
     ## .DS_Storeを作成しない。
     defaults write com.apple.desktopservices DSDontWriteNetworkStores True
@@ -31,7 +38,6 @@ case ${OSTYPE} in
     sudo apt upgrade -y
     sudo apt dist-update -y
     sudo apt install zsh -y
-    sudo apt install wget -y
     chsh -s /bin/zsh 
     ;;
 esac
