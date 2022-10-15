@@ -2,6 +2,10 @@ cask_args appdir: "/Applications"
 brew 'git'
 brew 'gh'
 
+tap homebrew/cask-fonts
+brew 'font-hackgen'
+brew 'font-hackgen-nerd'
+
 tap 'heroku/brew'
 brew 'heroku'
 
@@ -13,12 +17,9 @@ brew 'pngquant'
 brew 'exa'
 brew 'trash'
 brew 'vim'
+brew 'tmux'
 
 brew 'anyenv'
-#brew 'goenv'
-#brew 'nodenv'
-#brew 'pyenv'
-#brew 'rbenv'
 
 brew 'zsh-autosuggestions'
 brew 'zsh-syntax-highlighting'
@@ -30,11 +31,13 @@ brew 'postgresql@14'
 brew 'mysql'
 
 cask 'iterm2'
-cask 'adoptopenjdk11'
 cask 'biscuit'
 cask 'tableplus'
 cask 'transmit'
 #cask 'visual-studio-code'
+
+#cask 'adoptopenjdk11'
+cask zulu11
 
 # cask 'dropbox'
 # cask 'google-chrome'
