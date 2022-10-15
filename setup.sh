@@ -3,20 +3,17 @@
 DOTPATH=$HOME/dotfiles
 DOT_FILES=(.bin .zshrc .zshenv .vimrc)
 
-for file in ${DOT_FILES[@]}
-do
-  mv $HOME/$file $HOME/$file.org
-  ln -sf $DOTPATH/$file $HOME/$file
-  if [ $? -eq 0 ]; then
-    printf "    %-25s -> %s\n" "\$DOTPATH/$file" "\$HOME/$file"
-  fi   
-done
-
-## anyenv setting
-git clone https://github.com/anyenv/anyenv ~/.anyenv
-
+## zsh setup
 case ${OSTYPE} in
   darwin*)
+    echo "installing Homebrew ..."
+    which brew >/dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    echo "run brew update ..."
+    which brew >/dev/null 2>&1 && brew update
+    echo "run brew upgrade ..."
+    which brew >/dev/null 2>&1 && brew upgrade
+    echo "install wget"
+    which brew >/dev/null 2>&1 && brew install wget
     # Mac用の設定
     ## .DS_Storeを作成しない。
     defaults write com.apple.desktopservices DSDontWriteNetworkStores True
@@ -28,13 +25,50 @@ case ${OSTYPE} in
     defaults write com.apple.dock springboard-rows -int 6
     defaults write com.apple.dock ResetLaunchPad -bool TRUE
     killall Dock
+    ;;
+  Linux*)
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt dist-update -y
+    sudo apt install zsh -y
+    sudo apt install wget -y
+    chsh -s /bin/zsh 
+    ;;
+esac
+
+## Oh my zsh install
+## https://ohmyz.sh/
+echo 'Oh! my zsh install...'
+sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
+
+## dotfile
+for file in ${DOT_FILES[@]}
+do
+  mv $HOME/$file $HOME/$file.org
+  ln -sf $DOTPATH/$file $HOME/$file
+  if [ $? -eq 0 ]; then
+    printf "    %-25s -> %s\n" "\$DOTPATH/$file" "\$HOME/$file"
+  fi   
+done
+
+## anyenv install
+git clone https://github.com/anyenv/anyenv ~/.anyenv
+
+case ${OSTYPE} in
+  darwin*)
     ## mac packege init
     bash $DOTPATH/mac_init.sh
     ;;
   linux*)
-    # Linux用の設定
+    # Linux package init
+    bash $DOTPATH/apt_init.sh
     ;;
 esac
+
+exec $SHELL -l
 
 # Google Cloud SDK install
 # https://cloud.google.com/sdk/docs/downloads-interactive?hl=ja#interactive_installation
