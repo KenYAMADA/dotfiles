@@ -70,7 +70,8 @@ export PATH=$HOME/development/flutter/bin:$PATH
 export PATH=/usr/local/opt/mysql-client/bin:$PATH
 
 ## Android SDK
-export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$ANDROID_HOME/tools/bin/sdkmanager:$ANDROID_HOME/tools/bin/avdmanager:$PATH
 
 ## オレオレ
 export PATH=$HOME/.bin:$PATH
