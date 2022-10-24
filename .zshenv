@@ -61,18 +61,27 @@ then
 fi
 
 ## Rust
-export PATH=$HOME/.cargo/bin:$PATH
+if [ -e "$HOME/.cargo/bin" ]
+then
+  export PATH=$HOME/.cargo/bin:$PATH
+fi
 
 ## Flutter
-export PATH=$HOME/development/flutter/bin:$PATH
+if [ -e "$HOME/development/flutter/bin" ]
+then
+  export PATH=$HOME/development/flutter/bin:$PATH
+fi
 
 ## mysql client
-export PATH=/usr/local/opt/mysql-client/bin:$PATH
+if [ -e "/usr/local/opt/mysql-client/bin/bin" ]
+then
+  export PATH=/usr/local/opt/mysql-client/bin:$PATH
+fi
 
 ## Android SDK
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$ANDROID_HOME/tools/bin/sdkmanager:$ANDROID_HOME/tools/bin/avdmanager:$PATH
-
-## オレオレ
-export PATH=$HOME/.bin:$PATH
+if [ -e "$HOME/Library/Android/sdk" ]
+then
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+  export PATH=$ANDROID_HOME/tools/bin/sdkmanager:$ANDROID_HOME/tools/bin/avdmanager:$PATH
+fi
 
