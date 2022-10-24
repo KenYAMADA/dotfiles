@@ -73,7 +73,6 @@ ZSH_THEME="agnoster"
 plugins=(
     git
     zsh-autosuggestions
-    autojump
     zsh-completions
     zsh-syntax-highlighting
 )
