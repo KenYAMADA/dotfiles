@@ -18,6 +18,7 @@ brew 'exa'
 brew 'trash'
 brew 'vim'
 brew 'tmux'
+brew 'neofetch'
 
 brew 'anyenv'
 
@@ -37,7 +38,8 @@ cask 'transmit'
 #cask 'visual-studio-code'
 
 #cask 'adoptopenjdk11'
-cask zulu11
+#cask zulu11
+cask zulu17
 
 # cask 'dropbox'
 # cask 'google-chrome'

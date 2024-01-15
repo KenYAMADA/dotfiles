@@ -43,7 +43,7 @@ esac
 ## Java
 case ${OSTYPE} in
   darwin*)
-    export JAVA_HOME=`/usr/libexec/java_home -v 11`
+    export JAVA_HOME=`/usr/libexec/java_home -v "17"`
     ;;
   Linux*)
     ;;
@@ -71,6 +71,7 @@ if [ -e "$HOME/development/flutter/bin" ]
 then
   export PATH=$HOME/development/flutter/bin:$PATH
 fi
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 ## mysql client
 if [ -e "/usr/local/opt/mysql-client/bin/bin" ]

@@ -25,6 +25,7 @@ anyenv install rbenv
 anyenv install pyenv
 anyenv install nodenv
 anyenv install go
+anyenv install jenv
 
 # config
 mkdir -p $HOME/.config/gh & ln -s $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
