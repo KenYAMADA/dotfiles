@@ -1,3 +1,8 @@
+# Android studio (IntelliJ IDEA) add Env
+## https://intellij-support.jetbrains.com/hc/en-us/articles/15268184143890-Shell-Environment-Loading
+if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+  export ZSH_TMUX_AUTOSTART=true
+fi
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/.bin:/usr/local/bin:$PATH
 
