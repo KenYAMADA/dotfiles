@@ -62,6 +62,7 @@ done
 
 ## anyenv install
 git clone https://github.com/anyenv/anyenv ~/.anyenv
+anyenv install --init
 
 case ${OSTYPE} in
   darwin*)
