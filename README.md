@@ -13,7 +13,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/in
 ```
 
 ### Windows (BETA)
-'''Power Shell
+```Power Shell
 iex "& {$(irm 'https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.ps1')}"
 ```
 
