@@ -58,7 +58,7 @@ done
 ## anyenv install
 if [ ! -d "$HOME/.anyenv" ]; then
     git clone https://github.com/anyenv/anyenv ~/.anyenv
-    anyenv install --init
+#    anyenv install --init
 fi
 
 ## Platform specific init
