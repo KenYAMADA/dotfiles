@@ -1,65 +1,65 @@
 # install.ps1
 #
-# Windowsç’°å¢ƒã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚’1ã‚³ãƒžãƒ³ãƒ‰ã§å®Ÿè¡Œã—ã¾ã™ã€‚
-# PowerShellã§å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚
+# WindowsŠÂ‹«‚ÌƒZƒbƒgƒAƒbƒv‚ð1ƒRƒ}ƒ“ƒh‚ÅŽÀs‚µ‚Ü‚·B
+# PowerShell‚ÅŽÀs‚µ‚Ä‚­‚¾‚³‚¢B
 
-# ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸå ´åˆã¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’åœæ­¢ã™ã‚‹
+# ƒGƒ‰[‚ª”­¶‚µ‚½ê‡‚ÍƒXƒNƒŠƒvƒg‚ð’âŽ~‚·‚é
 $ErrorActionPreference = "Stop"
 
-# --- åˆæœŸè¨­å®š ---
+# --- ‰ŠúÝ’è ---
 $RepoUrl = "https://github.com/kenyamada/dotfiles.git"
 $DotfilesPath = "$HOME\dotfiles"
 
-Write-Host "--- Windowsã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚’é–‹å§‹ã—ã¾ã™ ---" -ForegroundColor Green
+Write-Host "--- WindowsƒZƒbƒgƒAƒbƒv‚ðŠJŽn‚µ‚Ü‚· ---" -ForegroundColor Green
 
-# 1. Gitã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèª
+# 1. Git‚ÌƒCƒ“ƒXƒg[ƒ‹Šm”F
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-    Write-Host "GitãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚wingetã‚’ä½¿ã£ã¦ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™..."
+    Write-Host "Git‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñBwinget‚ðŽg‚Á‚ÄƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·..."
     winget install --id Git.Git -e --source winget --accept-package-agreements
     
-    # Gitã®ãƒ‘ã‚¹ã‚’ç¾åœ¨ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³ã«ä¸€æ™‚çš„ã«è¿½åŠ 
+    # Git‚ÌƒpƒX‚ðŒ»Ý‚ÌƒZƒbƒVƒ‡ƒ“‚ÉˆêŽž“I‚É’Ç‰Á
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-    Write-Host "Gitã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã—ãŸã€‚å‡¦ç†ã‚’ç¶šè¡Œã—ã¾ã™ã€‚" -ForegroundColor Green
+    Write-Host "Git‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚µ‚½Bˆ—‚ð‘±s‚µ‚Ü‚·B" -ForegroundColor Green
 }
 
-# 2. dotfilesãƒªãƒã‚¸ãƒˆãƒªã®ã‚¯ãƒ­ãƒ¼ãƒ³ã¾ãŸã¯æ›´æ–°
+# 2. dotfilesƒŠƒ|ƒWƒgƒŠ‚ÌƒNƒ[ƒ“‚Ü‚½‚ÍXV
 if (Test-Path -Path $DotfilesPath) {
-    Write-Host "$DotfilesPath ã¯æ—¢ã«å­˜åœ¨ã—ã¾ã™ã€‚æœ€æ–°ã®å†…å®¹ã‚’å–å¾—ã—ã¾ã™..."
+    Write-Host "$DotfilesPath ‚ÍŠù‚É‘¶Ý‚µ‚Ü‚·BÅV‚Ì“à—e‚ðŽæ“¾‚µ‚Ü‚·..."
     try {
         Set-Location -Path $DotfilesPath
         git pull
     } catch {
-        Write-Error "ãƒªãƒã‚¸ãƒˆãƒªã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸ: $_"
+        Write-Error "ƒŠƒ|ƒWƒgƒŠ‚ÌXV‚ÉŽ¸”s‚µ‚Ü‚µ‚½: $_"
         exit 1
     }
 } else {
-    Write-Host "$RepoUrl ã‹ã‚‰dotfilesã‚’ã‚¯ãƒ­ãƒ¼ãƒ³ã—ã¾ã™..."
+    Write-Host "$RepoUrl ‚©‚çdotfiles‚ðƒNƒ[ƒ“‚µ‚Ü‚·..."
     try {
         git clone $RepoUrl $DotfilesPath
     } catch {
-        Write-Error "ãƒªãƒã‚¸ãƒˆãƒªã®ã‚¯ãƒ­ãƒ¼ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸ: $_"
+        Write-Error "ƒŠƒ|ƒWƒgƒŠ‚ÌƒNƒ[ƒ“‚ÉŽ¸”s‚µ‚Ü‚µ‚½: $_"
         exit 1
     }
 }
 
-# 3. Windowsãƒã‚¤ãƒ†ã‚£ãƒ–ã‚¢ãƒ—ãƒªã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å®Ÿè¡Œ
+# 3. WindowsƒlƒCƒeƒBƒuƒAƒvƒŠ‚ÌƒZƒbƒgƒAƒbƒvƒXƒNƒŠƒvƒg‚ðŽÀs
 Set-Location -Path $DotfilesPath
 $wingetScriptPath = Join-Path -Path $DotfilesPath -ChildPath "winget_packages.ps1"
 
 if (Test-Path $wingetScriptPath) {
-    Write-Host "Windowsãƒã‚¤ãƒ†ã‚£ãƒ–ã‚¢ãƒ—ãƒªã¨VS Codeæ‹¡å¼µæ©Ÿèƒ½ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚’é–‹å§‹ã—ã¾ã™..."
-    # å®Ÿè¡Œãƒãƒªã‚·ãƒ¼ã‚’ç¾åœ¨ã®ãƒ—ãƒ­ã‚»ã‚¹ã§ã®ã¿ãƒã‚¤ãƒ‘ã‚¹ã—ã¦ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å®Ÿè¡Œ
+    Write-Host "WindowsƒlƒCƒeƒBƒuƒAƒvƒŠ‚ÆVS CodeŠg’£‹@”\‚ÌƒCƒ“ƒXƒg[ƒ‹‚ðŠJŽn‚µ‚Ü‚·..."
+    # ŽÀsƒ|ƒŠƒV[‚ðŒ»Ý‚ÌƒvƒƒZƒX‚Å‚Ì‚ÝƒoƒCƒpƒX‚µ‚ÄƒXƒNƒŠƒvƒg‚ðŽÀs
     PowerShell -ExecutionPolicy Bypass -File $wingetScriptPath
 } else {
-    Write-Warning "$wingetScriptPath ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚"
+    Write-Warning "$wingetScriptPath ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B"
 }
 
-# 4. WSL (Linux CLIç’°å¢ƒ) ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—æ¡ˆå†…
+# 4. WSL (Linux CLIŠÂ‹«) ‚ÌƒZƒbƒgƒAƒbƒvˆÄ“à
 Write-Host ""
-Write-Host "--- WSL (Linux CLIç’°å¢ƒ) ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—æ¡ˆå†… ---" -ForegroundColor Green
-Write-Host "æ¬¡ã«ã€WSLã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦Linuxã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ç’°å¢ƒã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚"
+Write-Host "--- WSL (Linux CLIŠÂ‹«) ‚ÌƒZƒbƒgƒAƒbƒvˆÄ“à ---" -ForegroundColor Green
+Write-Host "ŽŸ‚ÉAWSL‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚ÄLinuxƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ŠÂ‹«‚ð\’z‚µ‚Ü‚·B"
 
-# WSLãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã‚‹ã‹ç¢ºèª
+# WSL‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚é‚©Šm”F
 try {
     wsl.exe --status > $null
     $wslInstalled = $true
@@ -68,19 +68,19 @@ try {
 }
 
 if (-not $wslInstalled) {
-    Write-Host "WSLãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚WSLã¨Ubuntuã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™..."
+    Write-Host "WSL‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBWSL‚ÆUbuntu‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·..."
     wsl.exe --install
-    Write-Host "WSLã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãŒå®Œäº†ã—ã¾ã—ãŸã€‚ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã‚’å†èµ·å‹•ã—ã¦ãã ã•ã„ã€‚" -ForegroundColor Yellow
-    Write-Host "å†èµ·å‹•å¾Œã€ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ã€ŒUbuntuã€ã‚’é–‹ãã€åˆæœŸè¨­å®šï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼åãƒ»ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ï¼‰ã‚’å®Œäº†ã•ã›ã¦ãã ã•ã„ã€‚"
-    Write-Host "ãã®å¾Œã€é–‹ã„ãŸUbuntuã®ã‚¿ãƒ¼ãƒŸãƒŠãƒ«ã§ä»¥ä¸‹ã®ã‚³ãƒžãƒ³ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ã¨ã€Linuxç’°å¢ƒã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãŒå§‹ã¾ã‚Šã¾ã™ã€‚"
+    Write-Host "WSL‚ÌƒCƒ“ƒXƒg[ƒ‹‚ªŠ®—¹‚µ‚Ü‚µ‚½BƒRƒ“ƒsƒ…[ƒ^‚ðÄ‹N“®‚µ‚Ä‚­‚¾‚³‚¢B" -ForegroundColor Yellow
+    Write-Host "Ä‹N“®ŒãAƒXƒ^[ƒgƒƒjƒ…[‚©‚çuUbuntuv‚ðŠJ‚«A‰ŠúÝ’èiƒ†[ƒU[–¼EƒpƒXƒ[ƒhj‚ðŠ®—¹‚³‚¹‚Ä‚­‚¾‚³‚¢B"
+    Write-Host "‚»‚ÌŒãAŠJ‚¢‚½Ubuntu‚Ìƒ^[ƒ~ƒiƒ‹‚ÅˆÈ‰º‚ÌƒRƒ}ƒ“ƒh‚ðŽÀs‚·‚é‚ÆALinuxŠÂ‹«‚ÌƒZƒbƒgƒAƒbƒv‚ªŽn‚Ü‚è‚Ü‚·B"
     Write-Host "sh -c `"`$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)`"" -ForegroundColor Cyan
 } else {
-    Write-Host "WSLã¯æ—¢ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã¾ã™ã€‚"
-    Write-Host "Linuxç’°å¢ƒã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚’è¡Œã†ã«ã¯ã€ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ã€ŒUbuntuã€ãªã©ã®ãƒ‡ã‚£ã‚¹ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹ãã€"
-    Write-Host "ä»¥ä¸‹ã®ã‚³ãƒžãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚"
+    Write-Host "WSL‚ÍŠù‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·B"
+    Write-Host "LinuxŠÂ‹«‚ÌƒZƒbƒgƒAƒbƒv‚ðs‚¤‚É‚ÍAƒXƒ^[ƒgƒƒjƒ…[‚©‚çuUbuntuv‚È‚Ç‚ÌƒfƒBƒXƒgƒŠƒrƒ…[ƒVƒ‡ƒ“‚ðŠJ‚«A"
+    Write-Host "ˆÈ‰º‚ÌƒRƒ}ƒ“ƒh‚ðŽÀs‚µ‚Ä‚­‚¾‚³‚¢B"
     Write-Host "sh -c `"`$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)`"" -ForegroundColor Cyan
 }
 
 Write-Host ""
-Write-Host "--- Windowså´ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒå®Œäº†ã—ã¾ã—ãŸ ---" -ForegroundColor Green
+Write-Host "--- Windows‘¤‚ÌƒZƒbƒgƒAƒbƒvƒXƒNƒŠƒvƒg‚ªŠ®—¹‚µ‚Ü‚µ‚½ ---" -ForegroundColor Green
 

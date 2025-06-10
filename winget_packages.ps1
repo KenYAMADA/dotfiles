@@ -1,13 +1,13 @@
 # winget_packages.ps1
 #
-# Windowsã®GUIã‚¢ãƒ—ãƒªã¨VS Codeæ‹¡å¼µæ©Ÿèƒ½ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™ã€‚
+# Windows‚ÌGUIƒAƒvƒŠ‚ÆVS CodeŠg’£‹@”\‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·B
 
-Write-Host "--- Windows ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚’é–‹å§‹ã—ã¾ã™ ---" -ForegroundColor Green
+Write-Host "--- Windows ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒCƒ“ƒXƒg[ƒ‹‚ğŠJn‚µ‚Ü‚· ---" -ForegroundColor Green
 winget source update
 
-# --- wingetã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã™ã‚‹ã‚¢ãƒ—ãƒª ---
+# --- winget‚ÅƒCƒ“ƒXƒg[ƒ‹‚·‚éƒAƒvƒŠ ---
 $packages = @{
-    # é–‹ç™ºãƒ„ãƒ¼ãƒ«
+    # ŠJ”­ƒc[ƒ‹
     "Visual Studio Code" = "Microsoft.VisualStudioCode";
     "Git"                = "Git.Git";
     "Docker Desktop"     = "Docker.DockerDesktop";
@@ -19,30 +19,30 @@ $packages = @{
     "Yarn"               = "Yarn.Yarn";
     "Python 3.12"        = "Python.Python.3.12";
     
-    # ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ & ã‚³ãƒŸãƒ¥ãƒ‹ã‚±ãƒ¼ã‚·ãƒ§ãƒ³
+    # ƒ†[ƒeƒBƒŠƒeƒB & ƒRƒ~ƒ…ƒjƒP[ƒVƒ‡ƒ“
     "Google Chrome"    = "Google.Chrome";
     "Slack"            = "Slack.Slack";
     "LINE"             = "LINE.LINE";
     "Zoom"             = "Zoom.Zoom";
     "Discord"          = "Discord.Discord";
-    "Alfred (PowerToys Run)" = "Microsoft.PowerToys"; # Alfredã®ä»£æ›¿
+    "Alfred (PowerToys Run)" = "Microsoft.PowerToys"; # Alfred‚Ì‘ã‘Ö
     "iTerm2 (Windows Terminal)" = "Microsoft.WindowsTerminal";
 }
 
 foreach ($name in $packages.Keys) {
     $id = $packages[$name]
-    Write-Host ">>> ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ä¸­: $name ($id)" -ForegroundColor Yellow
+    Write-Host ">>> ƒCƒ“ƒXƒg[ƒ‹’†: $name ($id)" -ForegroundColor Yellow
     winget install --id $id --source winget --accept-package-agreements --accept-source-agreements
 }
 
-# --- VS Code æ‹¡å¼µæ©Ÿèƒ½ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ« ---
-# Brewfileã®'vscode'ãƒªã‚¹ãƒˆã«ç›¸å½“
+# --- VS Code Šg’£‹@”\‚ÌƒCƒ“ƒXƒg[ƒ‹ ---
+# Brewfile‚Ì'vscode'ƒŠƒXƒg‚É‘Š“–
 Write-Host ""
-Write-Host "--- VS Code æ‹¡å¼µæ©Ÿèƒ½ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚’é–‹å§‹ã—ã¾ã™ ---" -ForegroundColor Green
+Write-Host "--- VS Code Šg’£‹@”\‚ÌƒCƒ“ƒXƒg[ƒ‹‚ğŠJn‚µ‚Ü‚· ---" -ForegroundColor Green
 
-# VS Codeã®ã‚³ãƒãƒ³ãƒ‰ãƒ‘ã‚¹ãŒé€šã£ã¦ã„ã‚‹ã‹ç¢ºèª
+# VS Code‚ÌƒRƒ}ƒ“ƒhƒpƒX‚ª’Ê‚Á‚Ä‚¢‚é‚©Šm”F
 if ((Get-Command code -ErrorAction SilentlyContinue) -eq $null) {
-    Write-Host "VS Codeã®'code'ã‚³ãƒãƒ³ãƒ‰ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚ãƒ‘ã‚¹ãŒé€šã£ã¦ã„ã‚‹ã‹ç¢ºèªã—ã¦ãã ã•ã„ã€‚" -ForegroundColor Red
+    Write-Host "VS Code‚Ì'code'ƒRƒ}ƒ“ƒh‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñBƒpƒX‚ª’Ê‚Á‚Ä‚¢‚é‚©Šm”F‚µ‚Ä‚­‚¾‚³‚¢B" -ForegroundColor Red
     exit
 }
 
@@ -62,14 +62,14 @@ $vscode_extensions = @(
     "amazonwebservices.aws-toolkit-vscode",
     "yzhang.markdown-all-in-one",
     "ms-ceintl.vscode-language-pack-ja"
-    # Brewfileã‹ã‚‰å¿…è¦ãªã‚‚ã®ã‚’ã•ã‚‰ã«è¿½åŠ 
+    # Brewfile‚©‚ç•K—v‚È‚à‚Ì‚ğ‚³‚ç‚É’Ç‰Á
 )
 
 foreach ($ext in $vscode_extensions) {
-    Write-Host ">>> VS Codeæ‹¡å¼µæ©Ÿèƒ½ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ä¸­: $ext" -ForegroundColor Yellow
+    Write-Host ">>> VS CodeŠg’£‹@”\‚ÌƒCƒ“ƒXƒg[ƒ‹’†: $ext" -ForegroundColor Yellow
     code --install-extension $ext --force
 }
 
 Write-Host ""
-Write-Host "--- å…¨ã¦ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ãŒå®Œäº†ã—ã¾ã—ãŸ ---" -ForegroundColor Green
+Write-Host "--- ‘S‚Ä‚ÌƒZƒbƒgƒAƒbƒv‚ªŠ®—¹‚µ‚Ü‚µ‚½ ---" -ForegroundColor Green
 
