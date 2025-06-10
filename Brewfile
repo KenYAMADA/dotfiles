@@ -1,4 +1,3 @@
-tap "adoptopenjdk/openjdk"
 tap "grishka/grishka"
 tap "heroku/brew"
 tap "lihaoyun6/tap"
@@ -23,7 +22,6 @@ brew "mackup"
 brew "mactop"
 brew "mas"
 brew "mysql"
-brew "openjdk@17"
 brew "pipenv"
 brew "pipx"
 brew "pkgconf"
@@ -47,17 +45,17 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 cask "alfred", args: { appdir: "/Applications" }
 cask "androidtool"
-cask "biscuit"
 cask "devtoys"
+cask "discord" # 追加
 cask "font-hack-nerd-font"
 cask "font-hackgen"
 cask "font-hackgen-nerd"
 cask "iterm2"
 cask "logoer"
 cask "neardrop"
-cask "tableplus", args: { appdir: "/Applications" }
 cask "transmit", args: { appdir: "/Applications" }
 cask "xcodes"
+cask "zoom" # 追加
 mas "CleanMyMac", id: 1339170533
 mas "DaisyDisk", id: 411643860
 mas "Developer", id: 640199958
