@@ -1,51 +1,33 @@
-cask_args appdir: "/Applications"
-brew 'git'
-brew 'gh'
+# Homebrew Taps
+tap "heroku/brew"
 
-tap homebrew/cask-fonts
-brew 'font-hackgen'
-brew 'font-hackgen-nerd'
+# Brew Packages
+brew "git"
+brew "gh"
+brew "awscli"
+brew "eza"
+brew "trash"
+brew "vim"
+brew "anyenv"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+brew "pngquant"
+brew "mas"
+brew "xcodegen"
+brew "cocoapods"
+brew "postgresql@14"
+brew "mysql"
+brew "heroku"
+brew "mackup"
 
-tap 'heroku/brew'
-brew 'heroku'
+# Cask Applications (macOS GUI Apps)
+cask "iterm2"
+cask "tableplus"
+cask "transmit"
+cask "biscuit"
+# cask "adoptopenjdk11" # This cask is deprecated. Consider "temurin" or another.
 
-brew 'awscli'
+# Mac App Store Applications (via mas)
+mas "Kindle", id: 405399194
+mas "LINE", id: 539883307
 
-brew 'tree'
-brew 'mackup'
-brew 'pngquant'
-brew 'eza'
-brew 'trash'
-brew 'vim'
-brew 'tmux'
-brew 'neofetch'
-
-brew 'anyenv'
-
-brew 'zsh-autosuggestions'
-brew 'zsh-syntax-highlighting'
-
-brew 'xcodegen'
-brew 'cocoapods'
-
-brew 'postgresql@14'
-brew 'mysql'
-
-cask 'iterm2'
-cask 'biscuit'
-cask 'tableplus'
-cask 'transmit'
-#cask 'visual-studio-code'
-
-#cask 'adoptopenjdk11'
-#cask zulu11
-cask zulu17
-
-# cask 'dropbox'
-# cask 'google-chrome'
-# cask 'karabiner-elements'
-
-brew 'mas'
-mas 'Kindle', id: 405399194
-mas 'LINE', id: 539883307
-mas "RunCat", id: 1429033973

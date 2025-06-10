@@ -115,3 +115,11 @@ source ~/dotfiles/.zshrc.alias
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/yamadaken/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/yamadaken/.lmstudio/bin"

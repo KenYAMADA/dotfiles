@@ -1,0 +1,9 @@
+icurl
+vim
+awscli
+trash-cli
+fzf
+gh
+eza
+git
+zsh
