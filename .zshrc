@@ -123,3 +123,4 @@ compinit
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/yamadaken/.lmstudio/bin"
+alias claude="/Users/yamadaken/.claude/local/claude"
