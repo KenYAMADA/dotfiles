@@ -43,6 +43,7 @@ brew "yarn"
 brew "zsh"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+brew "powershell"
 cask "alfred", args: { appdir: "/Applications" }
 cask "androidtool"
 cask "devtoys"
