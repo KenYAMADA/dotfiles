@@ -1,13 +1,13 @@
 # winget_packages.ps1
 #
-# WindowsのGUIアプリとVS Code拡張機能をインストールします。
+# Install Windows GUI applications and VS Code extensions.
 
-Write-Host "--- Windows アプリケーションのインストールを開始します ---" -ForegroundColor Green
+Write-Host "--- Starting Windows Application Installation ---" -ForegroundColor Green
 winget source update
 
-# --- wingetでインストールするアプリ ---
+# --- Applications to install via winget ---
 $packages = @{
-    # 開発ツール
+    # Development Tools
     "Visual Studio Code" = "Microsoft.VisualStudioCode";
     "Git"                = "Git.Git";
     "Docker Desktop"     = "Docker.DockerDesktop";
@@ -19,30 +19,30 @@ $packages = @{
     "Yarn"               = "Yarn.Yarn";
     "Python 3.12"        = "Python.Python.3.12";
     
-    # ユーティリティ & コミュニケーション
+    # Utilities & Communication
     "Google Chrome"    = "Google.Chrome";
     "Slack"            = "Slack.Slack";
     "LINE"             = "LINE.LINE";
     "Zoom"             = "Zoom.Zoom";
     "Discord"          = "Discord.Discord";
-    "Alfred (PowerToys Run)" = "Microsoft.PowerToys"; # Alfredの代替
+    "Alfred (PowerToys Run)" = "Microsoft.PowerToys"; # Alternative to Alfred
     "iTerm2 (Windows Terminal)" = "Microsoft.WindowsTerminal";
 }
 
 foreach ($name in $packages.Keys) {
     $id = $packages[$name]
-    Write-Host ">>> インストール中: $name ($id)" -ForegroundColor Yellow
+    Write-Host ">>> Installing: $name ($id)" -ForegroundColor Yellow
     winget install --id $id --source winget --accept-package-agreements --accept-source-agreements
 }
 
-# --- VS Code 拡張機能のインストール ---
-# Brewfileの'vscode'リストに相当
+# --- VS Code Extensions Installation ---
+# Equivalent to 'vscode' list in Brewfile
 Write-Host ""
-Write-Host "--- VS Code 拡張機能のインストールを開始します ---" -ForegroundColor Green
+Write-Host "--- Starting VS Code Extensions Installation ---" -ForegroundColor Green
 
-# VS Codeのコマンドパスが通っているか確認
+# Check if VS Code command path is available
 if ((Get-Command code -ErrorAction SilentlyContinue) -eq $null) {
-    Write-Host "VS Codeの'code'コマンドが見つかりません。パスが通っているか確認してください。" -ForegroundColor Red
+    Write-Host "VS Code 'code' command not found. Please verify the path is configured correctly." -ForegroundColor Red
     exit
 }
 
@@ -62,14 +62,13 @@ $vscode_extensions = @(
     "amazonwebservices.aws-toolkit-vscode",
     "yzhang.markdown-all-in-one",
     "ms-ceintl.vscode-language-pack-ja"
-    # Brewfileから必要なものをさらに追加
+    # Add more extensions from Brewfile as needed
 )
 
 foreach ($ext in $vscode_extensions) {
-    Write-Host ">>> VS Code拡張機能のインストール中: $ext" -ForegroundColor Yellow
+    Write-Host ">>> Installing VS Code extension: $ext" -ForegroundColor Yellow
     code --install-extension $ext --force
 }
 
 Write-Host ""
-Write-Host "--- 全てのセットアップが完了しました ---" -ForegroundColor Green
-
+Write-Host "--- All Setup Completed ---" -ForegroundColor Green

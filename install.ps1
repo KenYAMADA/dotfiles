@@ -1,65 +1,65 @@
 # install.ps1
 #
-# Windows環境のセットアップを1コマンドで実行します。
-# PowerShellで実行してください。
+# Execute Windows environment setup with a single command.
+# Run this script with PowerShell.
 
-# エラーが発生した場合はスクリプトを停止する
+# Stop the script if an error occurs
 $ErrorActionPreference = "Stop"
 
-# --- 初期設定 ---
+# --- Initial Settings ---
 $RepoUrl = "https://github.com/kenyamada/dotfiles.git"
 $DotfilesPath = "$HOME\dotfiles"
 
-Write-Host "--- Windowsセットアップを開始します ---" -ForegroundColor Green
+Write-Host "--- Starting Windows Setup ---" -ForegroundColor Green
 
-# 1. Gitのインストール確認
+# 1. Check Git installation
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-    Write-Host "Gitが見つかりません。wingetを使ってインストールします..."
+    Write-Host "Git not found. Installing via winget..."
     winget install --id Git.Git -e --source winget --accept-package-agreements
     
-    # Gitのパスを現在のセッションに一時的に追加
+    # Temporarily add Git path to current session
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-    Write-Host "Gitをインストールしました。処理を続行します。" -ForegroundColor Green
+    Write-Host "Git installed successfully. Continuing process." -ForegroundColor Green
 }
 
-# 2. dotfilesリポジトリのクローンまたは更新
+# 2. Clone or update dotfiles repository
 if (Test-Path -Path $DotfilesPath) {
-    Write-Host "$DotfilesPath は既に存在します。最新の内容を取得します..."
+    Write-Host "$DotfilesPath already exists. Fetching latest content..."
     try {
         Set-Location -Path $DotfilesPath
         git pull
     } catch {
-        Write-Error "リポジトリの更新に失敗しました: $_"
+        Write-Error "Failed to update repository: $_"
         exit 1
     }
 } else {
-    Write-Host "$RepoUrl からdotfilesをクローンします..."
+    Write-Host "Cloning dotfiles from $RepoUrl..."
     try {
         git clone $RepoUrl $DotfilesPath
     } catch {
-        Write-Error "リポジトリのクローンに失敗しました: $_"
+        Write-Error "Failed to clone repository: $_"
         exit 1
     }
 }
 
-# 3. Windowsネイティブアプリのセットアップスクリプトを実行
+# 3. Execute Windows native app setup script
 Set-Location -Path $DotfilesPath
 $wingetScriptPath = Join-Path -Path $DotfilesPath -ChildPath "winget_packages.ps1"
 
 if (Test-Path $wingetScriptPath) {
-    Write-Host "WindowsネイティブアプリとVS Code拡張機能のインストールを開始します..."
-    # 実行ポリシーを現在のプロセスでのみバイパスしてスクリプトを実行
+    Write-Host "Starting installation of Windows native apps and VS Code extensions..."
+    # Execute script by bypassing execution policy for current process only
     PowerShell -ExecutionPolicy Bypass -File $wingetScriptPath
 } else {
-    Write-Warning "$wingetScriptPath が見つかりませんでした。"
+    Write-Warning "$wingetScriptPath not found."
 }
 
-# 4. WSL (Linux CLI環境) のセットアップ案内
+# 4. WSL (Linux CLI environment) setup guide
 Write-Host ""
-Write-Host "--- WSL (Linux CLI環境) のセットアップ案内 ---" -ForegroundColor Green
-Write-Host "次に、WSLをインストールしてLinuxコマンドライン環境を構築します。"
+Write-Host "--- WSL (Linux CLI Environment) Setup Guide ---" -ForegroundColor Green
+Write-Host "Next, install WSL to build a Linux command line environment."
 
-# WSLがインストールされているか確認
+# Check if WSL is installed
 try {
     wsl.exe --status > $null
     $wslInstalled = $true
@@ -68,19 +68,18 @@ try {
 }
 
 if (-not $wslInstalled) {
-    Write-Host "WSLがインストールされていません。WSLとUbuntuをインストールします..."
+    Write-Host "WSL is not installed. Installing WSL and Ubuntu..."
     wsl.exe --install
-    Write-Host "WSLのインストールが完了しました。コンピュータを再起動してください。" -ForegroundColor Yellow
-    Write-Host "再起動後、スタートメニューから「Ubuntu」を開き、初期設定（ユーザー名・パスワード）を完了させてください。"
-    Write-Host "その後、開いたUbuntuのターミナルで以下のコマンドを実行すると、Linux環境のセットアップが始まります。"
+    Write-Host "WSL installation completed. Please restart your computer." -ForegroundColor Yellow
+    Write-Host "After restart, open 'Ubuntu' from the Start menu and complete the initial setup (username and password)."
+    Write-Host "Then, run the following command in the opened Ubuntu terminal to start Linux environment setup:"
     Write-Host "sh -c `"`$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)`"" -ForegroundColor Cyan
 } else {
-    Write-Host "WSLは既にインストールされています。"
-    Write-Host "Linux環境のセットアップを行うには、スタートメニューから「Ubuntu」などのディストリビューションを開き、"
-    Write-Host "以下のコマンドを実行してください。"
+    Write-Host "WSL is already installed."
+    Write-Host "To set up the Linux environment, open a distribution like 'Ubuntu' from the Start menu and"
+    Write-Host "run the following command:"
     Write-Host "sh -c `"`$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)`"" -ForegroundColor Cyan
 }
 
 Write-Host ""
-Write-Host "--- Windows側のセットアップスクリプトが完了しました ---" -ForegroundColor Green
-
+Write-Host "--- Windows Setup Script Completed ---" -ForegroundColor Green
