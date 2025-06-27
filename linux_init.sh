@@ -51,12 +51,6 @@ fi
 # GitHub CLI config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
 
-## Install packages via other methods
-# ------------------------------------
-# Install Heroku CLI
-curl https://cli-assets.heroku.com/install.sh | sh
-
-
 # --- Install GUI Applications ---
 # Install GUI apps only if $DISPLAY variable exists
 if [ -n "$DISPLAY" ] && command -v apt-get &> /dev/null; then
