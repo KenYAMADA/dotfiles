@@ -92,7 +92,7 @@ case ${OSTYPE} in
 
     # Install recommended font for Powerlevel10k (MesloLGS NF)
     if command -v fc-list &> /dev/null && ! fc-list | grep -q "MesloLGS NF"; then
-      # (Font installation logic remains unchanged, as it's not directly related to the Zsh default shell issue)
+      : # No font installation logic here, as it's handled elsewhere or intentionally skipped.
     fi
 
     # Update packages
