@@ -155,7 +155,16 @@ done
 ## anyenv install
 if [ ! -d "$HOME/.anyenv" ]; then
     git clone https://github.com/anyenv/anyenv ~/.anyenv
-#    anyenv install --init # This should be run after anyenv is sourced in .zshrc, not directly here.
+fi
+
+# Ensure anyenv is available for the current script execution
+if [ -d "$HOME/.anyenv" ]; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    if command -v anyenv &> /dev/null; then
+        eval "$(anyenv init -)"
+    else
+        echo "Warning: anyenv command not found after adding to PATH. Please check anyenv installation." >&2
+    fi
 fi
 
 ## Platform specific init
