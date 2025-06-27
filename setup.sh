@@ -163,10 +163,12 @@ if [ -d "$HOME/.anyenv" ]; then
     if command -v anyenv &> /dev/null; then
         eval "$(anyenv init -)"
         # Initialize anyenv definitions (e.g., rbenv, pyenv)
-        if [ ! -d "$(anyenv root)/envs" ]; then # Check if definitions root exists
+        if [ ! -d "$(anyenv root)/plugins/anyenv-install" ]; then # Check if anyenv-install plugin is installed
             echo "Initializing anyenv definitions..."
             anyenv install --init
         fi
+        # Point to the correct definition root for the anyenv-install plugin
+        export ANYENV_DEFINITION_ROOT="$(anyenv root)/plugins/anyenv-install"
     else
         echo "Warning: anyenv command not found after adding to PATH. Please check anyenv installation." >&2
     fi
