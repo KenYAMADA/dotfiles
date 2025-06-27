@@ -13,7 +13,7 @@ eza
 ripgrep
 inetutils # for telnet
 fzf
-github-cli
+# github-cli is now managed by a separate script or installed via other means.
 bash
 cmake
 pkgconf
@@ -22,3 +22,4 @@ mysql-clients
 postgresql-libs
 python-pip
 yarn
+## AWS CLI is now managed by a separate script.

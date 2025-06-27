@@ -12,7 +12,7 @@ eza
 ripgrep
 telnet
 fzf
-gh
+# gh is now managed by a separate script or installed via other means.
 bash
 cmake
 pkg-config
@@ -22,3 +22,4 @@ postgresql-client
 python3-pip
 python3-dev
 yarn
+## AWS CLI is now managed by a separate script.
