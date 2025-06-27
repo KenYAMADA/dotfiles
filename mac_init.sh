@@ -21,10 +21,6 @@ killall Dock
 ## https://iterm2.com/documentation-shell-integration.html
 curl -L https://iterm2.com/misc/install_shell_integration.sh | bash
 
-## Google Cloud related tools (gcloud, cloud_sql_proxy) are now managed by a separate script.
-## To install them, run:
-## bash ~/dotfiles/scripts/setup_gcloud.sh
-
 ## vim plugin
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -37,5 +33,13 @@ anyenv install nodenv
 anyenv install goenv
 anyenv install jenv
 
+# anyenv update plugins
+mkdir -p $(anyenv root)/plugins
+git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
+
 # config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
+
+## Heroku CLI is now managed by a separate script.
+## To install it, run:
+## bash ~/dotfiles/scripts/setup_heroku.sh

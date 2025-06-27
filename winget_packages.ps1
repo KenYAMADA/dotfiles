@@ -24,8 +24,6 @@ $packages = @{
     "LINE"             = "LINE.LINE";
     "Zoom"             = "Zoom.Zoom";
     "Discord"          = "Discord.Discord";
-    "Alfred (PowerToys Run)" = "Microsoft.PowerToys"; # Alternative to Alfred
-    "iTerm2 (Windows Terminal)" = "Microsoft.WindowsTerminal";
 }
 
 foreach ($name in $packages.Keys) {

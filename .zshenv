@@ -1,5 +1,6 @@
 export PATH=$HOME/.bin:/usr/local/bin:$PATH
 
+# iTerm2 Shell Integration
 test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
 
 # ヒストリの設定
@@ -38,15 +39,6 @@ case ${OSTYPE} in
         alias ls='ls -F --color=auto'
         ;;
 esac
-
-## Java
-#case ${OSTYPE} in
-#  darwin*)
-#    export JAVA_HOME=`/usr/libexec/java_home -v "17"`
-#    ;;
-#  Linux*)
-#    ;;
-#esac
 
 ## anyenv
 if [ -e "$HOME/.anyenv" ]

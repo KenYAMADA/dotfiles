@@ -1,8 +1,11 @@
 #!/bin/bash
 
-# This script installs and configures AWS related tools.
+# This script installs and configures the AWS CLI.
 
-echo "--- Starting AWS Tools Setup ---"
+# Exit the script if an error occurs
+set -e
+
+echo "--- Starting AWS CLI Setup ---"
 
 # Function to install AWS CLI
 install_aws_cli() {
@@ -24,21 +27,21 @@ install_aws_cli() {
             brew install awscli
             ;;
         'Linux')
-            # For Linux, use the official bundled installer
-            echo "Installing via official script..."
+            echo "Installing via official AWS CLI v2 installer..."
             ARCH=$(uname -m)
             if [ "$ARCH" = "x86_64" ]; then
-                curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                INSTALL_URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
             elif [ "$ARCH" = "aarch64" ]; then
-                curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+                INSTALL_URL="https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip"
             else
-                echo "Unsupported Linux architecture for AWS CLI: $ARCH" >&2
+                echo "Unsupported Linux architecture: $ARCH. Please install AWS CLI manually." >&2
                 exit 1
             fi
-            
-            unzip awscliv2.zip
-            sudo ./aws/install
-            rm -rf aws awscliv2.zip
+            TEMP_DIR=$(mktemp -d)
+            curl -sSL "$INSTALL_URL" -o "$TEMP_DIR/awscliv2.zip"
+            unzip "$TEMP_DIR/awscliv2.zip" -d "$TEMP_DIR"
+            sudo "$TEMP_DIR/aws/install" --update
+            rm -rf "$TEMP_DIR"
             ;;
         *)
             echo "Unsupported OS: $(uname -s). Please install AWS CLI manually." >&2
@@ -53,5 +56,5 @@ install_aws_cli() {
 # --- Main Execution ---
 install_aws_cli
 
-echo "--- AWS Tools Setup Finished ---"
+echo "--- AWS CLI Setup Finished ---"
 echo "You may need to run 'aws configure' to set up your credentials."

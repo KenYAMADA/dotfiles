@@ -38,6 +38,10 @@ anyenv install nodenv
 anyenv install goenv
 anyenv install jenv
 
+# anyenv update plugins
+mkdir -p $(anyenv root)/plugins
+git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
+
 # GitHub CLI config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
 
@@ -45,8 +49,6 @@ mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/
 # ------------------------------------
 # Install Heroku CLI
 curl https://cli-assets.heroku.com/install.sh | sh
-# Install Mackup
-pip3 install mackup
 
 
 # --- Install GUI Applications ---
