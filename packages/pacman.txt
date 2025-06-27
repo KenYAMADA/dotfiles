@@ -1,0 +1,24 @@
+# Packages for pacman (Arch Linux, etc.)
+git
+curl
+wget
+zsh
+vim
+htop
+jq
+tmux
+tree
+trash-cli
+eza
+ripgrep
+inetutils # for telnet
+fzf
+github-cli
+bash
+cmake
+pkgconf
+libpng
+mysql-clients
+postgresql-libs
+python-pip
+yarn

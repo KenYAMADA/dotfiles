@@ -1,0 +1,25 @@
+# Packages for dnf (Fedora, CentOS, etc.)
+git
+curl
+wget
+zsh
+vim-enhanced
+htop
+jq
+tmux
+tree
+trash-cli
+eza
+ripgrep
+telnet
+fzf
+gh
+bash
+cmake
+pkgconf-pkg-config
+libpng-devel
+mysql
+postgresql
+python3-pip
+python3-devel
+yarn

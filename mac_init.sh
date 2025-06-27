@@ -5,8 +5,8 @@ if [ "$(uname)" != "Darwin" ] ; then
 	exit 1
 fi
 
-# Mac用の設定
-## .DS_Storeを作成しない。
+# macOS settings
+## Do not create .DS_Store files.
 defaults write com.apple.desktopservices DSDontWriteNetworkStores True
 ## screenshot
 defaults write com.apple.screencapture name "ss"
@@ -21,10 +21,9 @@ killall Dock
 ## https://iterm2.com/documentation-shell-integration.html
 curl -L https://iterm2.com/misc/install_shell_integration.sh | bash
 
-## Google SQL Auth Proxy
-## https://cloud.google.com/sql/docs/mysql/sql-proxy?hl=ja#install
-curl -o ~/.bin/cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
-chmod +x ~/.bin/cloud_sql_proxy
+## Google Cloud related tools (gcloud, cloud_sql_proxy) are now managed by a separate script.
+## To install them, run:
+## bash ~/dotfiles/scripts/setup_gcloud.sh
 
 ## vim plugin
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
@@ -40,4 +39,3 @@ anyenv install jenv
 
 # config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
-

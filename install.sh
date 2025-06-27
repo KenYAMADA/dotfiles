@@ -1,70 +1,69 @@
 #!/bin/bash
 #
-# このスクリプトはdotfilesをクローンし、セットアップを開始します。
-# 実行コマンド:
+# This script clones the dotfiles repository and starts the setup.
+# Command to execute:
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)"
 #
 
-# エラーが発生したらスクリプトを終了する
+# Exit the script if an error occurs
 set -e
 
-# --- 設定 (環境に合わせて変更してください) ---
-# GitHubのユーザー名とリポジトリ名
+# --- Configuration (change according to your environment) ---
+# GitHub username and repository name
 REPO_URL="https://github.com/kenyamada/dotfiles.git"
-# dotfilesをクローンする場所
+# Location to clone dotfiles
 DOTPATH="$HOME/dotfiles"
 
-# --- 実行部分 ---
+# --- Execution ---
 
-# 1. 前提となるgitコマンドの存在を確認・インストール
+# 1. Check for and install the prerequisite git command
 if ! command -v git &> /dev/null; then
-  echo "Gitがインストールされていません。インストールを試みます..."
-  # OSの種類を判定
+  echo "Git is not installed. Attempting to install..."
+  # Determine OS type
   case "$(uname -s)" in
     'Darwin')
-      # macOSの場合、Xcode Command Line Toolsのインストールを促す
-      # これによりgitがインストールされる (ユーザーの操作が必要)
-      echo "Xcode Command Line Toolsのインストールを開始します..."
+      # For macOS, prompt to install Xcode Command Line Tools
+      # This will install git (user interaction required)
+      echo "Starting installation of Xcode Command Line Tools..."
       xcode-select --install
       ;;
     'Linux')
-      # Debian/Ubuntu系Linuxの場合
+      # For Debian/Ubuntu based Linux
       if command -v apt-get &> /dev/null; then
         sudo apt-get update
         sudo apt-get install -y git
-      # RedHat/CentOS系Linuxの場合
+      # For RedHat/CentOS based Linux
       elif command -v yum &> /dev/null; then
         sudo yum install -y git
       else
-        echo "'apt-get'または'yum'が見つかりませんでした。手動でGitをインストールしてください。"
+        echo "'apt-get' or 'yum' not found. Please install Git manually."
         exit 1
       fi
       ;;
     *)
-      echo "サポートされていないOSです: $(uname -s)。手動でGitをインストールしてください。"
+      echo "Unsupported OS: $(uname -s). Please install Git manually."
       exit 1
       ;;
   esac
 fi
 
-# 2. dotfilesリポジトリをクローン
+# 2. Clone the dotfiles repository
 if [ -d "$DOTPATH" ]; then
-  echo "$DOTPATH は既に存在します。最新の内容を取得します..."
+  echo "$DOTPATH already exists. Fetching the latest content..."
   cd "$DOTPATH"
   git pull
   cd "$HOME"
 else
-  echo "$REPO_URL からdotfilesをクローンします..."
+  echo "Cloning dotfiles from $REPO_URL..."
   git clone "$REPO_URL" "$DOTPATH"
 fi
 
-# 3. メインのセットアップスクリプトを実行
-echo "$DOTPATH に移動してメインのセットアップを開始します..."
+# 3. Execute the main setup script
+echo "Moving to $DOTPATH to start the main setup..."
 cd "$DOTPATH"
-# setup.shに実行権限を付与
+# Grant execute permission to setup.sh
 chmod +x setup.sh
 ./setup.sh
 
 echo ""
-echo "セットアップが完了しました！シェルを再起動して変更を反映させてください。"
-
+echo "Setup complete! Please restart your shell to apply the changes."

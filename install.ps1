@@ -1,85 +1,43 @@
-# install.ps1
-#
-# Execute Windows environment setup with a single command.
-# Run this script with PowerShell.
+<#
+.SYNOPSIS
+    This script clones the dotfiles repository and prepares the setup for Windows.
+.DESCRIPTION
+    It checks for Git, clones the repository, and then executes the main setup.ps1 script.
+.EXAMPLE
+    Set-ExecutionPolicy RemoteSigned -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.ps1'))
+#>
 
-# Stop the script if an error occurs
+# Exit on error
 $ErrorActionPreference = "Stop"
 
-# --- Initial Settings ---
+# --- Configuration ---
 $RepoUrl = "https://github.com/kenyamada/dotfiles.git"
-$DotfilesPath = "$HOME\dotfiles"
+$Dotpath = "$HOME\dotfiles"
 
-Write-Host "--- Starting Windows Setup ---" -ForegroundColor Green
+# --- Execution ---
 
-# 1. Check Git installation
+# 1. Check for Git
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-    Write-Host "Git not found. Installing via winget..."
-    winget install --id Git.Git -e --source winget --accept-package-agreements
-    
-    # Temporarily add Git path to current session
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-    Write-Host "Git installed successfully. Continuing process." -ForegroundColor Green
+    Write-Host "Git is not installed or not in your PATH."
+    Write-Host "Please install Git and try again. You can get it from https://git-scm.com/"
+    exit 1
 }
 
-# 2. Clone or update dotfiles repository
-if (Test-Path -Path $DotfilesPath) {
-    Write-Host "$DotfilesPath already exists. Fetching latest content..."
-    try {
-        Set-Location -Path $DotfilesPath
-        git pull
-    } catch {
-        Write-Error "Failed to update repository: $_"
-        exit 1
-    }
+# 2. Clone or update the dotfiles repository
+if (Test-Path $Dotpath) {
+    Write-Host "$Dotpath already exists. Fetching the latest content..."
+    Set-Location $Dotpath
+    git pull
+    Set-Location $HOME
 } else {
     Write-Host "Cloning dotfiles from $RepoUrl..."
-    try {
-        git clone $RepoUrl $DotfilesPath
-    } catch {
-        Write-Error "Failed to clone repository: $_"
-        exit 1
-    }
+    git clone $RepoUrl $Dotpath
 }
 
-# 3. Execute Windows native app setup script
-Set-Location -Path $DotfilesPath
-$wingetScriptPath = Join-Path -Path $DotfilesPath -ChildPath "winget_packages.ps1"
-
-if (Test-Path $wingetScriptPath) {
-    Write-Host "Starting installation of Windows native apps and VS Code extensions..."
-    # Execute script by bypassing execution policy for current process only
-    PowerShell -ExecutionPolicy Bypass -File $wingetScriptPath
-} else {
-    Write-Warning "$wingetScriptPath not found."
-}
-
-# 4. WSL (Linux CLI environment) setup guide
-Write-Host ""
-Write-Host "--- WSL (Linux CLI Environment) Setup Guide ---" -ForegroundColor Green
-Write-Host "Next, install WSL to build a Linux command line environment."
-
-# Check if WSL is installed
-try {
-    wsl.exe --status > $null
-    $wslInstalled = $true
-} catch {
-    $wslInstalled = $false
-}
-
-if (-not $wslInstalled) {
-    Write-Host "WSL is not installed. Installing WSL and Ubuntu..."
-    wsl.exe --install
-    Write-Host "WSL installation completed. Please restart your computer." -ForegroundColor Yellow
-    Write-Host "After restart, open 'Ubuntu' from the Start menu and complete the initial setup (username and password)."
-    Write-Host "Then, run the following command in the opened Ubuntu terminal to start Linux environment setup:"
-    Write-Host "sh -c `"`$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)`"" -ForegroundColor Cyan
-} else {
-    Write-Host "WSL is already installed."
-    Write-Host "To set up the Linux environment, open a distribution like 'Ubuntu' from the Start menu and"
-    Write-Host "run the following command:"
-    Write-Host "sh -c `"`$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)`"" -ForegroundColor Cyan
-}
+# 3. Execute the main setup script
+Write-Host "Moving to $Dotpath to start the main setup..."
+Set-Location $Dotpath
+./setup.ps1
 
 Write-Host ""
-Write-Host "--- Windows Setup Script Completed ---" -ForegroundColor Green
+Write-Host "Windows setup preparation complete! Please check for further instructions."
