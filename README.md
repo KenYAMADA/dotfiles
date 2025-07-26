@@ -31,3 +31,12 @@ Installation for Google Cloud SDK (`gcloud`, `gsutil`, `cloud_sql_proxy`, etc.) 
 ```bash
 bash ~/dotfiles/scripts/setup_gcloud.sh
 ```
+
+### Node.js via NVM
+
+To install the latest LTS version of Node.js using [nvm](https://github.com/nvm-sh/nvm), run:
+
+```bash
+bash ~/dotfiles/scripts/setup_node.sh
+```
+
