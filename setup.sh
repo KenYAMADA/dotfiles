@@ -38,7 +38,7 @@ case ${OSTYPE} in
     elif command -v yum &> /dev/null; then
       INSTALL_CMD="sudo yum install -y"
       UPDATE_CMD="sudo yum upgrade -y"
-      PKG_LIST_FILE="$DOTPATH/packages/yum.txt"
+      PKG_LIST_FILE="$DOTPATH/packages/dnf.txt"
     elif command -v pacman &> /dev/null; then
       INSTALL_CMD="sudo pacman -S --noconfirm"
       UPDATE_CMD="sudo pacman -Syu --noconfirm"
@@ -111,34 +111,9 @@ case ${OSTYPE} in
     ;;
 esac
 
-## Oh my zsh install
-## https://ohmyz.sh/
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    echo 'Installing Oh My Zsh...'
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-fi
-
-## Install zsh plugins and theme
-ZSH_CUSTOM_DIR=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
-
-PLUGINS=(
-  "https://github.com/zsh-users/zsh-autosuggestions"
-  "https://github.com/zsh-users/zsh-syntax-highlighting"
-  "https://github.com/zsh-users/zsh-completions"
-)
-
-for plugin_url in "${PLUGINS[@]}"; do
-  plugin_name=$(basename "$plugin_url")
-  if [ ! -d "$ZSH_CUSTOM_DIR/plugins/$plugin_name" ]; then
-    echo "Installing $plugin_name..."
-    git clone "$plugin_url" "$ZSH_CUSTOM_DIR/plugins/$plugin_name"
-  fi
-done
-
-if [ ! -d "$ZSH_CUSTOM_DIR/themes/powerlevel10k" ]; then
-  echo "Installing powerlevel10k theme..."
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM_DIR/themes/powerlevel10k"
-fi
+## Oh My Zsh setup
+echo "Setting up Oh My Zsh environment..."
+bash "$DOTPATH/scripts/setup_zsh.sh"
 ## dotfile
 for file in "${DOT_FILES[@]}" # Quote array for safety
 do
