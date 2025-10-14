@@ -1,7 +1,6 @@
 git
 curl
 wget
-zsh
 vim
 htop
 jq
@@ -10,7 +9,6 @@ tree
 trash-cli
 eza
 ripgrep
-telnet
 fzf
 # gh is now managed by a separate script or installed via other means.
 bash
