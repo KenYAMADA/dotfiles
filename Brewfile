@@ -47,6 +47,7 @@ cask "font-meslo-lg-nerd-font" # powerlevel10k推奨フォント
 cask "font-hack-nerd-font"
 cask "font-hackgen"
 cask "font-hackgen-nerd"
+cask "google-cloud-sdk" # Google Cloud SDK via Homebrew
 cask "iterm2"
 cask "logoer"
 cask "neardrop"
