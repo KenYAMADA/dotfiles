@@ -1,81 +1,100 @@
-# My Dotfiles
+# 私のDotfiles
 
-This repository contains my personal dotfiles and setup scripts for macOS and Linux with OS-specific optimizations.
+このリポジトリには、macOS、Linux、Windows向けの個人用dotfilesとセットアップスクリプトが含まれています。OS固有の最適化が施されています。
 
-## Quick Start
+## クイックスタート
 
-The installation scripts will clone this repository to `~/dotfiles` and run the appropriate setup script for your operating system.
+インストールスクリプトは、このリポジトリを`~/dotfiles`にクローンし、お使いのオペレーティングシステムに適したセットアップスクリプトを実行します。
 
-### Universal Installer (Recommended)
+### ユニバーサルインストーラー（推奨）
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)"
 ```
 
-This will automatically detect your OS and run the appropriate installer.
+これにより、OSを自動検出して適切なインストーラーを実行します。
 
-### OS-Specific Installers
+### OS別インストーラー
 
-#### macOS (Zsh + Oh My Zsh)
+#### macOS（Zsh + Oh My Zsh）
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install_mac.sh)"
 ```
 
-**Features:**
-- Zsh with Oh My Zsh framework
-- Powerlevel10k theme
-- Homebrew package management
-- macOS-specific applications and tools
+**機能:**
+- Oh My Zshフレームワークを使用したZsh
+- Powerlevel10kテーマ
+- Homebrewパッケージ管理
+- macOS専用アプリケーションとツール
+- Google Cloud SDK（Homebrew版）
+- Python 3.14対応
 
-#### Linux (Bash-focused)
+#### Linux（Bash中心）
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install_linux.sh)"
 ```
 
-**Features:**
-- Bash shell with enhanced configuration
-- System package manager integration (apt/dnf/yum/pacman)
-- Essential development tools
-- Linux-specific optimizations
+**機能:**
+- 拡張設定付きBashシェル
+- システムパッケージマネージャー統合（apt/dnf/yum/pacman）
+- 必須開発ツール
+- Linux固有の最適化
 
-## Structure
+**⚠️ 注意: Linux版はテスト版です。安定性に問題がある可能性があります。**
 
-### Core Files
-- `install.sh`: Universal installer that detects OS and runs appropriate installer
-- `install_mac.sh`: macOS-specific installer
-- `install_linux.sh`: Linux-specific installer
-- `setup.sh`: Main setup script with OS-specific configurations
+#### Windows（PowerShell中心）
 
-### Configuration Files
-- `.zshrc`, `.zshenv`: Zsh configuration (macOS)
-- `.bashrc`: Bash configuration (Linux)
-- `.vimrc`: Vim configuration
-- `.bin/`: Custom scripts and utilities
+```bash
+powershell -ExecutionPolicy Bypass -File https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.ps1
+```
 
-### Package Management
-- `Brewfile`: Homebrew packages for macOS
-- `packages/`: System packages for Linux distributions
-  - `apt.txt`: Debian/Ubuntu packages
-  - `dnf.txt`: Fedora/CentOS packages
-  - `pacman.txt`: Arch Linux packages
+**機能:**
+- PowerShell設定
+- Windows Package Manager（winget）統合
+- 開発ツールの自動インストール
 
-### Setup Scripts
-- `mac_init.sh`: macOS-specific initializations
-- `linux_init.sh`: Linux-specific initializations
-- `scripts/setup_zsh.sh`: Oh My Zsh installation and configuration
-- `scripts/setup_aws.sh`: AWS CLI installation
-- `scripts/setup_gcloud.sh`: Google Cloud SDK installation
-- `scripts/setup_heroku.sh`: Heroku CLI installation
+**⚠️ 注意: Windows版はテスト版です。安定性に問題がある可能性があります。**
 
-## Optional Setups
+## 構造
 
-### Cloud Tools
+### コアファイル
+- `install.sh`: OSを検出して適切なインストーラーを実行するユニバーサルインストーラー
+- `install_mac.sh`: macOS専用インストーラー
+- `install_linux.sh`: Linux専用インストーラー
+- `install.ps1`: Windows専用インストーラー
+- `setup.sh`: OS固有の設定を含むメインセットアップスクリプト
 
-These tools are installed separately to keep the main setup lean. Run the appropriate script after the main setup is complete:
+### 設定ファイル
+- `.zshrc`, `.zshenv`: Zsh設定（macOS）
+- `.bashrc`: Bash設定（Linux）
+- `.vimrc`: Vim設定
+- `.bin/`: カスタムスクリプトとユーティリティ
 
-#### Google Cloud SDK
+### パッケージ管理
+- `Brewfile`: macOS用Homebrewパッケージ
+- `packages/`: Linuxディストリビューション用システムパッケージ
+  - `apt.txt`: Debian/Ubuntuパッケージ
+  - `dnf.txt`: Fedora/CentOSパッケージ
+  - `pacman.txt`: Arch Linuxパッケージ
+- `winget_packages.ps1`: Windows用wingetパッケージ
+
+### セットアップスクリプト
+- `mac_init.sh`: macOS固有の初期化
+- `linux_init.sh`: Linux固有の初期化
+- `scripts/setup_zsh.sh`: Oh My Zshのインストールと設定
+- `scripts/setup_aws.sh`: AWS CLIインストール
+- `scripts/setup_gcloud.sh`: Google Cloud SDKインストール（Homebrew版）
+- `scripts/setup_heroku.sh`: Heroku CLIインストール
+
+## オプションセットアップ
+
+### クラウドツール
+
+これらのツールは、メインセットアップを軽量に保つために個別にインストールされます。メインセットアップ完了後に適切なスクリプトを実行してください：
+
+#### Google Cloud SDK（Homebrew版）
 ```bash
 bash ~/dotfiles/scripts/setup_gcloud.sh
 ```
@@ -90,46 +109,60 @@ bash ~/dotfiles/scripts/setup_aws.sh
 bash ~/dotfiles/scripts/setup_heroku.sh
 ```
 
-## OS-Specific Features
+## OS固有の機能
 
-### macOS Features
-- **Shell**: Zsh with Oh My Zsh framework
-- **Theme**: Powerlevel10k with MesloLGS NF font
-- **Package Manager**: Homebrew with Brewfile
-- **Applications**: iTerm2, Alfred, Xcode, development tools
-- **Languages**: Python, Node.js, Ruby via anyenv
-- **Cloud Tools**: AWS CLI, Google Cloud SDK, Heroku CLI
+### macOS機能
+- **シェル**: Oh My Zshフレームワークを使用したZsh
+- **テーマ**: MesloLGS NFフォントを使用したPowerlevel10k
+- **パッケージマネージャー**: Brewfileを使用したHomebrew
+- **アプリケーション**: iTerm2、Alfred、Xcode、開発ツール
+- **言語**: anyenv経由のPython、Node.js、Ruby
+- **クラウドツール**: AWS CLI、Google Cloud SDK（Homebrew版）、Heroku CLI
+- **互換性**: Python 3.14対応、Powerlevel10k instant prompt対応
 
-### Linux Features
-- **Shell**: Enhanced Bash configuration
-- **Package Managers**: apt/dnf/yum/pacman support
-- **Development Tools**: Git, Vim, essential CLI tools
-- **GUI Applications**: Zoom, Discord (when GUI environment detected)
-- **System Integration**: Proper PATH and environment setup
+### Linux機能
+- **シェル**: 拡張Bash設定
+- **パッケージマネージャー**: apt/dnf/yum/pacmanサポート
+- **開発ツール**: Git、Vim、必須CLIツール
+- **GUIアプリケーション**: Zoom、Discord（GUI環境が検出された場合）
+- **システム統合**: 適切なPATHと環境設定
 
-## Requirements
+**⚠️ 注意: Linux版はテスト版です。安定性に問題がある可能性があります。**
+
+## 要件
 
 ### macOS
-- macOS 10.15+ (Catalina or later)
+- macOS 10.15+（Catalina以降）
 - Xcode Command Line Tools
-- Internet connection for package downloads
+- パッケージダウンロード用のインターネット接続
 
 ### Linux
-- Ubuntu 18.04+, Fedora 30+, CentOS 8+, or Arch Linux
-- sudo privileges for package installation
-- Internet connection for package downloads
+- Ubuntu 18.04+、Fedora 30+、CentOS 8+、またはArch Linux
+- パッケージインストール用のsudo権限
+- パッケージダウンロード用のインターネット接続
 
-## Troubleshooting
+**⚠️ 注意: Linux版はテスト版です。安定性に問題がある可能性があります。**
 
-### Common Issues
+### Windows
+- Windows 10/11
+- PowerShell 5.1以上
+- Windows Package Manager（winget）
+- パッケージダウンロード用のインターネット接続
 
-1. **Permission denied errors**: Ensure scripts have execute permissions
-2. **Package installation failures**: Check internet connection and sudo privileges
-3. **Shell not changing**: Restart terminal or run `source ~/.zshrc` (macOS) or `source ~/.bashrc` (Linux)
+**⚠️ 注意: Windows版はテスト版です。安定性に問題がある可能性があります。**
 
-### Manual Installation
+## トラブルシューティング
 
-If the automated installer fails, you can manually clone and run the setup:
+### よくある問題
+
+1. **Permission denied エラー**: スクリプトに実行権限があることを確認してください
+2. **パッケージインストール失敗**: インターネット接続とsudo権限を確認してください
+3. **シェルが変更されない**: ターミナルを再起動するか、`source ~/.zshrc`（macOS）または`source ~/.bashrc`（Linux）を実行してください
+4. **Google Cloud SDKエラー**: Homebrew版を使用していることを確認し、Python 3.14との互換性を確認してください
+
+### 手動インストール
+
+自動インストーラーが失敗した場合、手動でクローンしてセットアップを実行できます：
 
 ```bash
 git clone https://github.com/kenyamada/dotfiles.git ~/dotfiles
@@ -137,3 +170,12 @@ cd ~/dotfiles
 chmod +x *.sh scripts/*.sh
 ./setup.sh
 ```
+
+## 最新の変更
+
+### v2025.10.14
+- Google Cloud SDKをHomebrew版に移行
+- Python 3.14との互換性問題を解決
+- Powerlevel10k instant promptとの互換性を改善
+- パッケージ管理の統一化
+- 既存環境との後方互換性を保持
