@@ -51,31 +51,16 @@ fi
 # GitHub CLI config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
 
-# --- Install GUI Applications ---
-# Install GUI apps only if $DISPLAY variable exists
+# --- Install GUI Applications (Optional) ---
+# Install GUI apps only if $DISPLAY variable exists and user wants them
 if [ -n "$DISPLAY" ] && command -v apt-get &> /dev/null; then
-    echo "GUI environment detected. Installing GUI applications..."
-
-    # Install Zoom
-    if ! command -v zoom &> /dev/null; then
-        echo "Installing Zoom..."
-        # Use curl for consistency with other scripts
-        curl -L "https://zoom.us/client/latest/zoom_${ARCH_TYPE}.deb" -o /tmp/zoom.deb
-        sudo apt-get install -y /tmp/zoom.deb
-        rm -f /tmp/zoom.deb
-    fi
-
-    # Install Discord (Note: Discord may not officially support ARM64)
-    if [ "$ARCH_TYPE" = "amd64" ]; then
-        if ! command -v discord &> /dev/null; then
-            echo "Installing Discord..."
-            curl -L "https://discord.com/api/download?platform=linux&format=deb" -o /tmp/discord.deb
-            sudo apt-get install -y /tmp/discord.deb
-            rm -f /tmp/discord.deb
-        fi
-    else
-        echo "Skipping Discord installation as it is not supported on non-amd64 architectures."
-    fi
+    echo "GUI environment detected."
+    echo "GUI applications (Zoom, Discord) are available but not installed by default."
+    echo "To install them manually, run:"
+    echo "  # Install Zoom:"
+    echo "  curl -L 'https://zoom.us/client/latest/zoom_${ARCH_TYPE}.deb' -o /tmp/zoom.deb && sudo apt-get install -y /tmp/zoom.deb && rm -f /tmp/zoom.deb"
+    echo "  # Install Discord (amd64 only):"
+    echo "  curl -L 'https://discord.com/api/download?platform=linux&format=deb' -o /tmp/discord.deb && sudo apt-get install -y /tmp/discord.deb && rm -f /tmp/discord.deb"
 else
     echo "No GUI environment or not a Debian-based system. Skipping GUI application installation."
 fi
