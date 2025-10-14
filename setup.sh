@@ -113,6 +113,10 @@ esac
 
 ## Oh My Zsh setup
 echo "Setting up Oh My Zsh environment..."
+# Ensure script has execute permission
+if [ ! -x "$DOTPATH/scripts/setup_zsh.sh" ]; then
+    chmod +x "$DOTPATH/scripts/setup_zsh.sh"
+fi
 bash "$DOTPATH/scripts/setup_zsh.sh"
 ## dotfile
 for file in "${DOT_FILES[@]}" # Quote array for safety
@@ -152,9 +156,17 @@ fi
 ## Platform specific init
 case ${OSTYPE} in
   darwin*)
+    # Ensure script has execute permission
+    if [ ! -x "$DOTPATH/mac_init.sh" ]; then
+        chmod +x "$DOTPATH/mac_init.sh"
+    fi
     bash "$DOTPATH/mac_init.sh"
     ;;
   linux*)
+    # Ensure script has execute permission
+    if [ ! -x "$DOTPATH/linux_init.sh" ]; then
+        chmod +x "$DOTPATH/linux_init.sh"
+    fi
     bash "$DOTPATH/linux_init.sh"
     ;;
 esac

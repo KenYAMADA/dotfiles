@@ -61,8 +61,11 @@ fi
 # 3. Execute the main setup script
 echo "Moving to $DOTPATH to start the main setup..."
 cd "$DOTPATH"
-# Grant execute permission to setup.sh
+# Grant execute permission to all scripts
 chmod +x setup.sh
+chmod +x mac_init.sh
+chmod +x linux_init.sh
+chmod +x scripts/*.sh
 ./setup.sh
 
 echo ""
