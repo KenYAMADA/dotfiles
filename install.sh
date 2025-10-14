@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# This script clones the dotfiles repository and starts the setup.
+# Universal installer for dotfiles - detects OS and runs appropriate installer
 # Command to execute:
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)"
 #
@@ -8,13 +8,14 @@
 # Exit the script if an error occurs
 set -e
 
-# --- Configuration (change according to your environment) ---
-# GitHub username and repository name
+# --- Configuration ---
 REPO_URL="https://github.com/kenyamada/dotfiles.git"
-# Location to clone dotfiles
 DOTPATH="$HOME/dotfiles"
 
 # --- Execution ---
+
+echo "🚀 Universal Dotfiles Installer"
+echo "=============================="
 
 # 1. Check for and install the prerequisite git command
 if ! command -v git &> /dev/null; then
@@ -23,9 +24,10 @@ if ! command -v git &> /dev/null; then
   case "$(uname -s)" in
     'Darwin')
       # For macOS, prompt to install Xcode Command Line Tools
-      # This will install git (user interaction required)
       echo "Starting installation of Xcode Command Line Tools..."
       xcode-select --install
+      echo "Please complete the Xcode Command Line Tools installation and run this script again."
+      exit 1
       ;;
     'Linux')
       # For Debian/Ubuntu based Linux
@@ -58,15 +60,26 @@ else
   git clone "$REPO_URL" "$DOTPATH"
 fi
 
-# 3. Execute the main setup script
-echo "Moving to $DOTPATH to start the main setup..."
-cd "$DOTPATH"
-# Grant execute permission to all scripts
-chmod +x setup.sh
-chmod +x mac_init.sh
-chmod +x linux_init.sh
-chmod +x scripts/*.sh
-./setup.sh
-
-echo ""
-echo "Setup complete! Please restart your shell to apply the changes."
+# 3. Detect OS and run appropriate installer
+echo "Detecting operating system..."
+case "$(uname -s)" in
+  'Darwin')
+    echo "🍎 macOS detected. Running macOS installer..."
+    cd "$DOTPATH"
+    chmod +x install_mac.sh
+    ./install_mac.sh
+    ;;
+  'Linux')
+    echo "🐧 Linux detected. Running Linux installer..."
+    cd "$DOTPATH"
+    chmod +x install_linux.sh
+    ./install_linux.sh
+    ;;
+  *)
+    echo "❌ Unsupported operating system: $(uname -s)"
+    echo "Please use the appropriate installer for your system:"
+    echo "  macOS: install_mac.sh"
+    echo "  Linux: install_linux.sh"
+    exit 1
+    ;;
+esac
