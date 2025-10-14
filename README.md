@@ -1,4 +1,4 @@
-# 私のDotfiles
+# Dotfiles
 
 このリポジトリには、macOS、Linux、Windows向けの個人用dotfilesとセットアップスクリプトが含まれています。OS固有の最適化が施されています。
 
