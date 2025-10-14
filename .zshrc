@@ -1,3 +1,36 @@
+# Google Cloud SDK initialization (must be before instant prompt)
+# Check for Homebrew version first, then fallback to manual installation
+if [ -f '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc' ]; then
+  source '/opt/homebrew/share/google-cloud-sdk/path.zsh.inc'
+elif [ -f '/usr/local/share/google-cloud-sdk/path.zsh.inc' ]; then
+  source '/usr/local/share/google-cloud-sdk/path.zsh.inc'
+elif [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc' ]; then
+  source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+elif [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc' ]; then
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+elif [ -f '/Users/yamadaken/google-cloud-sdk/path.zsh.inc' ]; then
+  source '/Users/yamadaken/google-cloud-sdk/path.zsh.inc'
+fi
+
+if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then
+  source '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc'
+elif [ -f '/usr/local/share/google-cloud-sdk/completion.zsh.inc' ]; then
+  source '/usr/local/share/google-cloud-sdk/completion.zsh.inc'
+elif [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then
+  source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+elif [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+elif [ -f '/Users/yamadaken/google-cloud-sdk/completion.zsh.inc' ]; then
+  source '/Users/yamadaken/google-cloud-sdk/completion.zsh.inc'
+fi
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Android studio (IntelliJ IDEA) add Env
 ## https://intellij-support.jetbrains.com/hc/en-us/articles/15268184143890-Shell-Environment-Loading
 if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
@@ -129,3 +162,6 @@ export PATH="$PATH:/Users/yamadaken/.lmstudio/bin"
 
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

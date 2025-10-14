@@ -46,6 +46,13 @@ fi
 # config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
 
+## Google Cloud SDK setup
+echo "Setting up Google Cloud SDK..."
+if [ ! -x "$DOTPATH/scripts/setup_gcloud.sh" ]; then
+    chmod +x "$DOTPATH/scripts/setup_gcloud.sh"
+fi
+bash "$DOTPATH/scripts/setup_gcloud.sh"
+
 ## Heroku CLI is now managed by a separate script.
 ## To install it, run:
 ## bash ~/dotfiles/scripts/setup_heroku.sh
