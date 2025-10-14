@@ -37,8 +37,6 @@ brew "xcodegen"
 ## gh is now managed by a separate script.
 brew "yarn"
 brew "zsh"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
 brew "powershell"
 
 cask "alfred", args: { appdir: "/Applications" }

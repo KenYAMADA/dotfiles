@@ -6,6 +6,9 @@ fi
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/.bin:/usr/local/bin:$PATH
 
+# zsh-completions plugin setup
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -13,7 +16,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="takashiyoshida"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -114,7 +117,6 @@ source ~/dotfiles/.zshrc.alias
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/yamadaken/.docker/completions $fpath)
 autoload -Uz compinit
@@ -125,3 +127,5 @@ compinit
 export PATH="$PATH:/Users/yamadaken/.lmstudio/bin"
 
 
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"

@@ -1,7 +1,15 @@
 #!/bin/bash
 
 DOTPATH=$HOME/dotfiles
-DOT_FILES=(.bin .zshrc .zshenv .vimrc)
+# OS-specific dotfiles
+case ${OSTYPE} in
+  darwin*)
+    DOT_FILES=(.bin .zshrc .zshenv .vimrc)
+    ;;
+  linux*)
+    DOT_FILES=(.bin .bashrc .vimrc)
+    ;;
+esac
 
 ## Zsh setup
 case ${OSTYPE} in
@@ -20,9 +28,15 @@ case ${OSTYPE} in
     brew cleanup
     ;;
   Linux*)
-    echo "Linux environment detected. Checking zsh setup..."
+    echo "Linux environment detected. Setting up bash-focused environment..."
 
-    # Check if zsh is installed
+    # Check if bash is available (should be default)
+    if ! command -v bash &> /dev/null; then
+      echo "Error: bash is not available. This installer requires bash." >&2
+      exit 1
+    fi
+
+    # Determine package manager and install essential packages
     INSTALL_CMD=""
     UPDATE_CMD=""
     PKG_LIST_FILE=""
@@ -38,61 +52,11 @@ case ${OSTYPE} in
     elif command -v yum &> /dev/null; then
       INSTALL_CMD="sudo yum install -y"
       UPDATE_CMD="sudo yum upgrade -y"
-      PKG_LIST_FILE="$DOTPATH/packages/yum.txt"
+      PKG_LIST_FILE="$DOTPATH/packages/dnf.txt"
     elif command -v pacman &> /dev/null; then
       INSTALL_CMD="sudo pacman -S --noconfirm"
       UPDATE_CMD="sudo pacman -Syu --noconfirm"
       PKG_LIST_FILE="$DOTPATH/packages/pacman.txt"
-    fi
-
-    if ! command -v zsh &> /dev/null; then
-      echo "zsh is not installed. Attempting to install..."
-      if [ -n "$INSTALL_CMD" ]; then
-        $INSTALL_CMD zsh
-        echo "zsh installation complete."
-      else
-        echo "No supported package manager found to install zsh." >&2
-        echo "Please install zsh manually." >&2
-        exit 1
-      fi
-    else
-      echo "zsh is already installed."
-    fi
-
-    # Change default shell to zsh if it's not already
-    if [[ "$(basename "$SHELL")" != "zsh" ]]; then
-      echo "Attempting to change default shell to zsh..."
-      ZSH_PATH=$(command -v zsh)
-      if [ -z "$ZSH_PATH" ]; then
-        echo "Error: zsh executable not found. Cannot change default shell." >&2
-        exit 1
-      fi
-
-      # Append zsh path to /etc/shells if it doesn't exist
-      if ! grep -Fxq "$ZSH_PATH" /etc/shells; then
-        echo "Adding $ZSH_PATH to /etc/shells (requires sudo password)..."
-        if ! echo "$ZSH_PATH" | sudo tee -a /etc/shells; then
-          echo "Warning: Failed to add zsh path to /etc/shells. You may need to do this manually." >&2
-        fi
-      fi
-
-      echo "Running 'chsh -s $ZSH_PATH' to change your default shell."
-      echo "You will be prompted for your user password."
-      if chsh -s "$ZSH_PATH"; then
-        echo "Default shell successfully changed to zsh."
-        echo "IMPORTANT: Please log out and log back in for the change to take effect."
-      else
-        echo "Warning: Failed to change default shell to zsh using 'chsh'." >&2
-        echo "You may need to change it manually by running 'chsh -s $(which zsh)' and entering your password." >&2
-        echo "Then, log out and log back in."
-      fi
-    else
-      echo "Default shell is already zsh."
-    fi
-
-    # Install recommended font for Powerlevel10k (MesloLGS NF)
-    if command -v fc-list &> /dev/null && ! fc-list | grep -q "MesloLGS NF"; then
-      : # No font installation logic here, as it's handled elsewhere or intentionally skipped.
     fi
 
     # Update packages
@@ -108,37 +72,33 @@ case ${OSTYPE} in
     else
       echo "Package list file not found or is empty. Skipping package installation."
     fi
+
+    echo "Bash-focused Linux setup complete."
     ;;
 esac
 
-## Oh my zsh install
-## https://ohmyz.sh/
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    echo 'Installing Oh My Zsh...'
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-fi
-
-## Install zsh plugins and theme
-ZSH_CUSTOM_DIR=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
-
-PLUGINS=(
-  "https://github.com/zsh-users/zsh-autosuggestions"
-  "https://github.com/zsh-users/zsh-syntax-highlighting"
-  "https://github.com/zsh-users/zsh-completions"
-)
-
-for plugin_url in "${PLUGINS[@]}"; do
-  plugin_name=$(basename "$plugin_url")
-  if [ ! -d "$ZSH_CUSTOM_DIR/plugins/$plugin_name" ]; then
-    echo "Installing $plugin_name..."
-    git clone "$plugin_url" "$ZSH_CUSTOM_DIR/plugins/$plugin_name"
-  fi
-done
-
-if [ ! -d "$ZSH_CUSTOM_DIR/themes/powerlevel10k" ]; then
-  echo "Installing powerlevel10k theme..."
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$ZSH_CUSTOM_DIR/themes/powerlevel10k"
-fi
+## Shell setup (OS-specific)
+case ${OSTYPE} in
+  darwin*)
+    ## Oh My Zsh setup for macOS
+    echo "Setting up Oh My Zsh environment..."
+    # Ensure script has execute permission
+    if [ ! -x "$DOTPATH/scripts/setup_zsh.sh" ]; then
+        chmod +x "$DOTPATH/scripts/setup_zsh.sh"
+    fi
+    bash "$DOTPATH/scripts/setup_zsh.sh"
+    ;;
+  linux*)
+    ## Bash setup for Linux
+    echo "Setting up bash environment..."
+    # Create bash configuration
+    if [ ! -f "$HOME/.bashrc" ] || [ ! -L "$HOME/.bashrc" ]; then
+        echo "Creating bash configuration..."
+        # Create a basic .bashrc if it doesn't exist
+        touch "$HOME/.bashrc"
+    fi
+    ;;
+esac
 ## dotfile
 for file in "${DOT_FILES[@]}" # Quote array for safety
 do
@@ -177,9 +137,17 @@ fi
 ## Platform specific init
 case ${OSTYPE} in
   darwin*)
+    # Ensure script has execute permission
+    if [ ! -x "$DOTPATH/mac_init.sh" ]; then
+        chmod +x "$DOTPATH/mac_init.sh"
+    fi
     bash "$DOTPATH/mac_init.sh"
     ;;
   linux*)
+    # Ensure script has execute permission
+    if [ ! -x "$DOTPATH/linux_init.sh" ]; then
+        chmod +x "$DOTPATH/linux_init.sh"
+    fi
     bash "$DOTPATH/linux_init.sh"
     ;;
 esac
