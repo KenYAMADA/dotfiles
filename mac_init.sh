@@ -56,3 +56,11 @@ bash "$DOTPATH/scripts/setup_gcloud.sh"
 ## Heroku CLI is now managed by a separate script.
 ## To install it, run:
 ## bash ~/dotfiles/scripts/setup_heroku.sh
+
+## Font configuration is now managed by separate scripts.
+## To set up fonts, run:
+## bash ~/dotfiles/scripts/setup_vscode_fonts.sh
+## bash ~/dotfiles/scripts/setup_cursor_fonts.sh
+## bash ~/dotfiles/scripts/setup_windsurf_fonts.sh
+## bash ~/dotfiles/scripts/setup_terminal_fonts.sh
+## bash ~/dotfiles/scripts/setup_iterm2_profile.sh
