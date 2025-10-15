@@ -109,6 +109,82 @@ bash ~/dotfiles/scripts/setup_aws.sh
 bash ~/dotfiles/scripts/setup_heroku.sh
 ```
 
+### フォント設定
+
+エディタとターミナルのフォントを統一するための設定が含まれています。**既存の設定は保持され、フォント設定のみが安全にマージされます。**
+
+#### 個別エディタフォント設定
+
+**VSCode**
+```bash
+bash ~/dotfiles/scripts/setup_vscode_fonts.sh
+```
+
+**Cursor**
+```bash
+bash ~/dotfiles/scripts/setup_cursor_fonts.sh
+```
+
+**Windsurf**
+```bash
+bash ~/dotfiles/scripts/setup_windsurf_fonts.sh
+```
+
+#### ターミナルフォント設定
+
+**macOS Terminal**
+```bash
+bash ~/dotfiles/scripts/setup_terminal_fonts.sh
+```
+
+**iTerm2プロファイル設定**
+```bash
+bash ~/dotfiles/scripts/setup_iterm2_profile.sh
+```
+
+#### 一括設定（上級者向け）
+
+**全エディタ一括設定**
+```bash
+bash ~/dotfiles/scripts/setup_editor_fonts.sh
+```
+
+**安全な設定マージ（手動）**
+```bash
+bash ~/dotfiles/scripts/merge_editor_settings.sh
+```
+
+**対応エディタ:**
+- VSCode
+- Cursor
+- Windsurf
+
+**対応ターミナル:**
+- macOS Terminal
+- iTerm2
+
+**フォント優先順位:**
+1. MesloLGS Nerd Font (Powerlevel10k推奨)
+2. HackGenNerd
+3. Hack Nerd Font
+4. Fira Code
+5. Monaco (macOS標準)
+6. Menlo (macOS標準)
+7. Ubuntu Mono
+8. monospace (フォールバック)
+
+**安全な設定マージの特徴:**
+- ✅ 既存の設定を保持
+- ✅ フォント設定のみを追加/更新
+- ✅ 自動バックアップ（タイムスタンプ付き）
+- ✅ JSON検証による安全なマージ
+- ✅ エラー時の自動復旧
+- ✅ 既存設定の復元可能
+- ✅ 個別エディタ対応
+- ✅ 環境インストール時は実行されない
+- ✅ jqなしでも動作（フォールバック機能付き）
+- ✅ 自動jqインストール（Homebrew利用時）
+
 ## OS固有の機能
 
 ### macOS機能
