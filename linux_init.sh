@@ -26,6 +26,44 @@ echo "Detected CPU architecture as ${ARCH_TYPE}."
 ## To install them, run:
 ## bash ~/dotfiles/scripts/setup_gcloud.sh
 
+## Starship prompt installation
+if ! command -v starship > /dev/null 2>&1; then
+    echo "Installing Starship prompt..."
+
+    # Try official installer first (most reliable)
+    if curl -fsSL https://starship.rs/install.sh | sh -s -- --yes; then
+        echo "Starship installed via official installer."
+    else
+        echo "Official installer failed, trying package manager..."
+
+        # Fallback to package managers
+        if command -v apt-get &> /dev/null; then
+            # For Ubuntu/Debian - need to add repo or use snap
+            if command -v snap &> /dev/null; then
+                sudo snap install starship
+            else
+                echo "Manual installation required. Please visit: https://starship.rs/guide/#step-1-install-starship"
+            fi
+        elif command -v dnf &> /dev/null; then
+            sudo dnf install starship
+        elif command -v pacman &> /dev/null; then
+            sudo pacman -S starship
+        else
+            echo "Package manager not supported. Manual installation required."
+            echo "Please visit: https://starship.rs/guide/#step-1-install-starship"
+        fi
+    fi
+else
+    echo "Starship is already installed."
+fi
+
+# Copy Starship configuration
+if [ -f "$HOME/dotfiles/starship.toml" ]; then
+    mkdir -p "$HOME/.config"
+    cp "$HOME/dotfiles/starship.toml" "$HOME/.config/starship.toml"
+    echo "Starship configuration copied."
+fi
+
 ## vim plugin
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim

@@ -56,3 +56,8 @@ alias python='python3'
 if [ -f ~/dotfiles/.bashrc.alias ]; then
     source ~/dotfiles/.bashrc.alias
 fi
+
+# Initialize Starship prompt
+if command -v starship > /dev/null 2>&1; then
+    eval "$(starship init bash)"
+fi

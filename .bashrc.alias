@@ -1,0 +1,150 @@
+# Linux-optimized aliases for bash
+# This file is automatically sourced by .bashrc
+
+# eza aliases (Linux optimized)
+if command -v eza > /dev/null 2>&1; then
+  # Basic eza aliases
+  alias e='eza'
+  alias l='eza'
+  alias ls='eza'
+
+  # Show hidden files
+  alias ea='eza -a'
+  alias la='eza -a'
+
+  # Detailed view
+  alias ee='eza -aal'
+  alias ll='eza -aal'
+
+  # Tree view (optimized for servers - no icons by default)
+  alias et='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
+  alias lt='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
+
+  # Tree view with pager
+  alias eta='eza -T -a -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache" --color=always | less -r'
+  alias lta='eza -T -a -I "node_modules|.git|.cache|__pycache__|.pytest_cache" --color=always | less -r'
+
+  # Enhanced aliases for GUI environments (with icons if supported)
+  if [ -n "$DISPLAY" ] || [ "$TERM_PROGRAM" = "vscode" ]; then
+    # Enable icons for GUI environments
+    alias ei='eza --icons'
+    alias li='eza --icons'
+    alias eai='eza -a --icons'
+    alias lai='eza -a --icons'
+    alias eei='eza -aal --icons'
+    alias lli='eza -aal --icons'
+    alias eti='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
+    alias lti='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
+  fi
+else
+  # Fallback to traditional ls with colors
+  alias l='ls --color=auto'
+  alias ls='ls --color=auto'
+  alias ll='ls -alF --color=auto'
+  alias la='ls -A --color=auto'
+fi
+
+# Directory navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Safe operations
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Useful utilities
+alias mkdir='mkdir -p'
+alias python='python3'
+alias pip='pip3'
+
+# Grep with color
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Process and system info
+alias ps='ps auxf'
+alias free='free -m'
+alias df='df -H'
+alias du='du -ch'
+
+# Network shortcuts
+alias ports='netstat -tulanp'
+alias ping='ping -c 5'
+
+# Development shortcuts
+alias g='git'
+alias v='vim'
+alias nano='nano -w'
+
+# Quick directory access
+alias home='cd ~'
+alias root='cd /'
+alias docs='cd ~/Documents'
+alias downloads='cd ~/Downloads'
+
+# Enable sudo for aliases
+alias sudo='sudo '
+
+# Modern alternatives (if available)
+if command -v bat > /dev/null 2>&1; then
+  alias cat='bat'
+  alias catn='bat --style=plain'
+fi
+
+if command -v fd > /dev/null 2>&1; then
+  alias find='fd'
+fi
+
+if command -v rg > /dev/null 2>&1; then
+  alias grep='rg'
+fi
+
+if command -v btm > /dev/null 2>&1; then
+  alias top='btm'
+  alias htop='btm'
+fi
+
+# Functions
+# Quick search in files
+search() {
+  if command -v rg > /dev/null 2>&1; then
+    rg -i "$1" "${2:-.}"
+  else
+    grep -r -i "$1" "${2:-.}"
+  fi
+}
+
+# Quick extract function
+extract() {
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.bz2) tar xjf "$1" ;;
+      *.tar.gz) tar xzf "$1" ;;
+      *.bz2) bunzip2 "$1" ;;
+      *.rar) unrar x "$1" ;;
+      *.gz) gunzip "$1" ;;
+      *.tar) tar xf "$1" ;;
+      *.tbz2) tar xjf "$1" ;;
+      *.tgz) tar xzf "$1" ;;
+      *.zip) unzip "$1" ;;
+      *.Z) uncompress "$1" ;;
+      *.7z) 7z x "$1" ;;
+      *.xz) unxz "$1" ;;
+      *.lzma) unlzma "$1" ;;
+      *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Make directory and cd into it
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# Show current path
+alias path='echo $PATH | tr -s ":" "\n"'
