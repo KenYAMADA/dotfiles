@@ -44,7 +44,14 @@ case ${OSTYPE} in
     if command -v apt-get &> /dev/null; then
       INSTALL_CMD="sudo apt-get install -y"
       UPDATE_CMD="sudo apt-get update && sudo apt-get upgrade -y"
-      PKG_LIST_FILE="$DOTPATH/packages/apt.txt"
+
+      # Use Raspberry Pi optimized package list if detected
+      if [ -f /proc/device-tree/model ] && grep -q "Raspberry Pi" /proc/device-tree/model 2>/dev/null; then
+        echo "Raspberry Pi detected - using optimized package list"
+        PKG_LIST_FILE="$DOTPATH/packages/apt-raspberry-pi.txt"
+      else
+        PKG_LIST_FILE="$DOTPATH/packages/apt.txt"
+      fi
     elif command -v dnf &> /dev/null; then
       INSTALL_CMD="sudo dnf install -y"
       UPDATE_CMD="sudo dnf upgrade -y"

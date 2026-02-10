@@ -1,0 +1,79 @@
+# Raspberry Pi optimized package list for apt-get
+# This list excludes packages that may not be available in Raspberry Pi OS repositories
+
+# Basic tools (definitely available)
+git
+curl
+wget
+vim
+nano
+htop
+tree
+bash
+
+# Essential development tools
+cmake
+pkg-config
+python3-pip
+python3-dev
+build-essential
+software-properties-common
+
+# Network and system utilities
+net-tools
+dnsutils
+rsync
+screen
+tmux
+
+# Media and image processing
+pngquant
+imagemagick
+
+# Database clients
+mysql-client
+postgresql-client
+
+# JSON processing
+jq
+
+# Archive utilities
+unzip
+zip
+p7zip-full
+
+# Optional modern alternatives (may require manual installation)
+# These are commented out and can be manually installed if available:
+# eza          # Modern ls replacement - may need manual installation
+# ripgrep      # Modern grep replacement - may need manual installation
+# fzf          # Fuzzy finder - may need manual installation via git
+# bat          # Modern cat replacement - may need manual installation
+
+# JavaScript/Node.js (if needed)
+# nodejs      # Uncomment if Node.js projects are needed
+# npm         # Uncomment if npm is needed
+# yarn        # Uncomment if yarn is needed
+
+# Python packages that are commonly needed
+python3-venv
+python3-setuptools
+
+# System monitoring
+iotop
+nload
+
+# Text processing
+sed
+awk
+grep
+
+# Version control
+git-core
+
+# Compilation tools for building from source
+gcc
+g++
+make
+autoconf
+automake
+libtool

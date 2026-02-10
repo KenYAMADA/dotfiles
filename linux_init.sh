@@ -7,6 +7,14 @@ fi
 
 # --- Determine CPU architecture ---
 ARCH_TYPE=""
+IS_RASPBERRY_PI=false
+
+# Check if running on Raspberry Pi
+if [ -f /proc/device-tree/model ] && grep -q "Raspberry Pi" /proc/device-tree/model 2>/dev/null; then
+    IS_RASPBERRY_PI=true
+    echo "Raspberry Pi detected: $(cat /proc/device-tree/model)"
+fi
+
 case $(uname -m) in
   x86_64)
     ARCH_TYPE="amd64"
@@ -14,10 +22,17 @@ case $(uname -m) in
   aarch64)
     ARCH_TYPE="arm64"
     ;;
+  armv7l|armv6l|armhf|arm*)
+    ARCH_TYPE="armhf"
+    ;;
   *)
-    echo "Unsupported CPU architecture: $(uname -m)"
-    # Set a compatible one or exit here
-    ARCH_TYPE="amd64" 
+    echo "Warning: Unsupported CPU architecture: $(uname -m)"
+    # Safer fallback for unknown ARM architectures
+    if [[ $(uname -m) =~ arm.* ]]; then
+      ARCH_TYPE="armhf"
+    else
+      ARCH_TYPE="amd64"
+    fi
     ;;
 esac
 echo "Detected CPU architecture as ${ARCH_TYPE}."
