@@ -1,47 +1,75 @@
 # Linux-optimized aliases for bash
 # This file is automatically sourced by .bashrc
 
-# eza aliases (Linux optimized)
+# Modern ls replacement with Raspberry Pi fallback (eza -> exa -> ls)
 if command -v eza > /dev/null 2>&1; then
-  # Basic eza aliases
-  alias e='eza'
-  alias l='eza'
-  alias ls='eza'
-
-  # Show hidden files
-  alias ea='eza -a'
-  alias la='eza -a'
-
-  # Detailed view
-  alias ee='eza -aal'
-  alias ll='eza -aal'
-
-  # Tree view (optimized for servers - no icons by default)
-  alias et='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
-  alias lt='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
-
-  # Tree view with pager
-  alias eta='eza -T -a -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache" --color=always | less -r'
+  # eza is available (preferred modern replacement)
+  alias e='eza --color=auto'
+  alias l='eza --color=auto'
+  alias ls='eza --color=auto'
+  alias ea='eza -a --color=auto'
+  alias la='eza -a --color=auto'
+  alias ee='eza -aal --color=auto'
+  alias ll='eza -aal --color=auto'
+  alias et='eza -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
+  alias lt='eza -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
+  alias eta='eza -T -a -I "node_modules|.git|.cache|__pycache__|.pytest_cache" --color=always | less -r'
   alias lta='eza -T -a -I "node_modules|.git|.cache|__pycache__|.pytest_cache" --color=always | less -r'
 
   # Enhanced aliases for GUI environments (with icons if supported)
   if [ -n "$DISPLAY" ] || [ "$TERM_PROGRAM" = "vscode" ]; then
-    # Enable icons for GUI environments
-    alias ei='eza --icons'
-    alias li='eza --icons'
-    alias eai='eza -a --icons'
-    alias lai='eza -a --icons'
-    alias eei='eza -aal --icons'
-    alias lli='eza -aal --icons'
-    alias eti='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
-    alias lti='eza -T -L 3 -a -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
+    alias ei='eza --icons --color=auto'
+    alias li='eza --icons --color=auto'
+    alias eai='eza -a --icons --color=auto'
+    alias lai='eza -a --icons --color=auto'
+    alias eei='eza -aal --icons --color=auto'
+    alias lli='eza -aal --icons --color=auto'
+    alias eti='eza -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
+    alias lti='eza -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
+  fi
+elif command -v exa > /dev/null 2>&1; then
+  # exa is available (fallback modern replacement for Raspberry Pi)
+  echo "Note: Using exa as ls replacement (eza not available)"
+  alias e='exa --color=auto'
+  alias l='exa --color=auto'
+  alias ls='exa --color=auto'
+  alias ea='exa -a --color=auto'
+  alias la='exa -a --color=auto'
+  alias ee='exa -aal --color=auto'
+  alias ll='exa -aal --color=auto'
+  alias et='exa -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc"'
+  alias lt='exa -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc"'
+
+  # Icons for GUI environments
+  if [ -n "$DISPLAY" ] || [ "$TERM_PROGRAM" = "vscode" ]; then
+    alias ei='exa --icons --color=auto'
+    alias li='exa --icons --color=auto'
+    alias eai='exa -a --icons --color=auto'
+    alias lai='exa -a --icons --color=auto'
+    alias eei='exa -aal --icons --color=auto'
+    alias lli='exa -aal --icons --color=auto'
+    alias eti='exa -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
+    alias lti='exa -T -L 3 -a --color=auto -I "node_modules|.git|.cache|__pycache__|*.pyc" --icons'
   fi
 else
-  # Fallback to traditional ls with colors
+  # Fallback to traditional ls with colors (Raspberry Pi compatible)
+  echo "Note: Using traditional ls (modern alternatives not available)"
   alias l='ls --color=auto'
   alias ls='ls --color=auto'
   alias ll='ls -alF --color=auto'
   alias la='ls -A --color=auto'
+  alias e='ls --color=auto'
+  alias ea='ls -A --color=auto'
+  alias ee='ls -alF --color=auto'
+
+  # Simple tree alternative using available commands
+  if command -v tree > /dev/null 2>&1; then
+    alias et='tree -a -L 3 -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
+    alias lt='tree -a -L 3 -I "node_modules|.git|.cache|__pycache__|*.pyc|.pytest_cache"'
+  else
+    alias et='find . -maxdepth 3 -not -path "*/\.*" | head -20'
+    alias lt='find . -maxdepth 3 -not -path "*/\.*" | head -20'
+  fi
 fi
 
 # Directory navigation
@@ -99,7 +127,7 @@ if command -v fd > /dev/null 2>&1; then
 fi
 
 if command -v rg > /dev/null 2>&1; then
-  alias grep='rg'
+  alias grep='rg --color=auto'
 fi
 
 if command -v btm > /dev/null 2>&1; then

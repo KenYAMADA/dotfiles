@@ -21,8 +21,24 @@ shopt -s histappend
 # Check the window size after each command and update LINES and COLUMNS
 shopt -s checkwinsize
 
-# Enable color support for ls
-if [ -x /usr/bin/dircolors ]; then
+# Detect terminal color support early (avoid monochrome prompt/output)
+DOTFILES_HAS_COLOR=0
+if [ -t 1 ] && command -v tput > /dev/null 2>&1; then
+    TERMINAL_COLORS="$(tput colors 2>/dev/null || echo 0)"
+    if [ -n "$TERMINAL_COLORS" ] && [ "$TERMINAL_COLORS" -ge 8 ] 2>/dev/null; then
+        DOTFILES_HAS_COLOR=1
+    fi
+fi
+
+# Prefer color output in common CLIs when supported
+if [ "$DOTFILES_HAS_COLOR" -eq 1 ]; then
+    unset NO_COLOR
+    export CLICOLOR=1
+    [ -z "$COLORTERM" ] && export COLORTERM=truecolor
+fi
+
+# Enable color support for ls/grep
+if [ "$DOTFILES_HAS_COLOR" -eq 1 ] && command -v dircolors > /dev/null 2>&1; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
@@ -57,7 +73,41 @@ if [ -f ~/dotfiles/.bashrc.alias ]; then
     source ~/dotfiles/.bashrc.alias
 fi
 
-# Initialize Starship prompt
+# Initialize prompt (Starship or fallback)
 if command -v starship > /dev/null 2>&1; then
+    # Use Starship if available (modern prompt)
     eval "$(starship init bash)"
+else
+    # Lightweight fallback prompt for Raspberry Pi and low-resource systems
+    echo "Note: Using lightweight prompt (Starship not available)"
+
+    # Git branch function for prompt
+    git_branch() {
+        local branch
+        if command -v git > /dev/null 2>&1 && git rev-parse --git-dir > /dev/null 2>&1; then
+            branch=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
+            if [ "$branch" != "" ]; then
+                echo " ($branch)"
+            fi
+        fi
+    }
+
+    # Colorful lightweight prompt
+    if [ "$DOTFILES_HAS_COLOR" -eq 1 ]; then
+        # Colors for the prompt
+        RED='\[\033[01;31m\]'
+        GREEN='\[\033[01;32m\]'
+        YELLOW='\[\033[01;33m\]'
+        BLUE='\[\033[01;34m\]'
+        PURPLE='\[\033[01;35m\]'
+        CYAN='\[\033[01;36m\]'
+        WHITE='\[\033[01;37m\]'
+        RESET='\[\033[00m\]'
+
+        # Set colorful prompt with git branch
+        PS1="${GREEN}\u@\h${RESET}:${BLUE}\w${YELLOW}\$(git_branch)${RESET}\$ "
+    else
+        # Simple prompt for non-color terminals
+        PS1='\u@\h:\w\$ '
+    fi
 fi
