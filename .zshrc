@@ -165,3 +165,6 @@ export PATH="$PATH:/Users/yamadaken/.lmstudio/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Added by Antigravity
+export PATH="/Users/yamadaken/.antigravity/antigravity/bin:$PATH"
