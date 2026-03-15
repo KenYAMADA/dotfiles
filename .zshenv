@@ -40,17 +40,6 @@ case ${OSTYPE} in
         ;;
 esac
 
-## anyenv
-if [ -d "$HOME/.anyenv" ]; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
-    # Check if anyenv command exists before initializing
-    if command -v anyenv >/dev/null 2>&1; then
-        eval "$(anyenv init -)"
-        # Point to the correct definition root for the anyenv-install plugin
-        export ANYENV_DEFINITION_ROOT="$(anyenv root)/plugins/anyenv-install"
-    fi
-fi
-
 ## Rust
 if [ -e "$HOME/.cargo/bin" ]
 then
