@@ -165,3 +165,13 @@ export PATH="$PATH:/Users/yamadaken/.lmstudio/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+## anyenv
+if [ -d "$HOME/.anyenv" ]; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    if command -v anyenv >/dev/null 2>&1; then
+        eval "$(anyenv init - zsh)"
+        # Point to the correct definition root for the anyenv-install plugin
+        export ANYENV_DEFINITION_ROOT="$(anyenv root)/plugins/anyenv-install"
+    fi
+fi
