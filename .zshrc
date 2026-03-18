@@ -175,3 +175,6 @@ if [ -d "$HOME/.anyenv" ]; then
         export ANYENV_DEFINITION_ROOT="$(anyenv root)/plugins/anyenv-install"
     fi
 fi
+
+# Added by Antigravity
+export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
