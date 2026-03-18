@@ -263,6 +263,22 @@ chmod +x *.sh scripts/*.sh
 
 ## 最新の変更
 
+### v2026.03.18
+- LinuxのBashプロンプト表示を改善し、`TERM=dumb` 環境でも色付き表示が崩れにくいよう修正
+- Linuxで `starship` 未導入時にも、色付きのフォールバックプロンプトを利用できるよう改善
+- Linux用 `setup.sh` のOS判定を修正し、Linux向けセットアップ処理が確実に動くよう変更
+- `starship.toml` のプロンプト記号表示を調整し、見た目を改善
+- Windows用 `install.ps1` の導線を修正し、新規 `setup.ps1` を追加
+- Windows用 PowerShell プロファイルを追加し、Starshipベースのプロンプト設定を自動化
+- `winget_packages.ps1` にStarshipを追加し、Windowsでもプロンプト環境をセットアップ可能にした
+
+### v2026.03.16
+- Zshの `anyenv` 初期化を `.zshenv` から `.zshrc` に移し、インタラクティブシェル向けの構成に整理
+
+### v2026.02.10
+- Linuxの `.bashrc` で端末の色対応判定を強化し、CLIの色表示を安定化
+- Linuxの `.bashrc.alias` を改善し、`eza` / `exa` / `ls` のフォールバック構成を整理
+
 ### v2025.10.14
 - Google Cloud SDKをHomebrew版に移行
 - Python 3.14との互換性問題を解決
