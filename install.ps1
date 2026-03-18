@@ -4,14 +4,14 @@
 .DESCRIPTION
     It checks for Git, clones the repository, and then executes the main setup.ps1 script.
 .EXAMPLE
-    Set-ExecutionPolicy RemoteSigned -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.ps1'))
+    Set-ExecutionPolicy RemoteSigned -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install.ps1'))
 #>
 
 # Exit on error
 $ErrorActionPreference = "Stop"
 
 # --- Configuration ---
-$RepoUrl = "https://github.com/kenyamada/dotfiles.git"
+$RepoUrl = "https://github.com/KenYAMADA/dotfiles.git"
 $Dotpath = "$HOME\dotfiles"
 
 # --- Execution ---
@@ -37,7 +37,7 @@ if (Test-Path $Dotpath) {
 # 3. Execute the main setup script
 Write-Host "Moving to $Dotpath to start the main setup..."
 Set-Location $Dotpath
-./setup.ps1
+& "$Dotpath\setup.ps1"
 
 Write-Host ""
 Write-Host "Windows setup preparation complete! Please check for further instructions."

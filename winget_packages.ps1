@@ -17,6 +17,7 @@ $packages = @{
     "CMake"              = "Kitware.CMake";
     "Yarn"               = "Yarn.Yarn";
     "Python 3.12"        = "Python.Python.3.12";
+    "Starship"           = "Starship.Starship";
     
     # Utilities & Communication
     "Google Chrome"    = "Google.Chrome";

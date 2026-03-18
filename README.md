@@ -48,15 +48,16 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/in
 #### Windows（PowerShell中心）
 
 ```bash
-powershell -ExecutionPolicy Bypass -File https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install.ps1
+powershell -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install.ps1'))"
 ```
 
 **機能:**
-- PowerShell設定
+- PowerShellプロファイル設定
+- Starshipによる色付きプロンプト
 - Windows Package Manager（winget）統合
 - 開発ツールの自動インストール
 
-**⚠️ 注意: Windows版はテスト版です。安定性に問題がある可能性があります。**
+**⚠️ 注意: Windows版は未テストのテスト版です。環境によってはインストールや設定が期待どおりに動作しない可能性があります。**
 
 ## 構造
 
@@ -65,6 +66,7 @@ powershell -ExecutionPolicy Bypass -File https://raw.githubusercontent.com/KenYA
 - `install_mac.sh`: macOS専用インストーラー
 - `install_linux.sh`: Linux専用インストーラー
 - `install.ps1`: Windows専用インストーラー
+- `setup.ps1`: Windows用セットアップスクリプト
 - `setup.sh`: OS固有の設定を含むメインセットアップスクリプト
 
 ### 設定ファイル
@@ -207,6 +209,14 @@ bash ~/dotfiles/scripts/merge_editor_settings.sh
 
 **⚠️ 注意: Linux版はテスト版です。安定性に問題がある可能性があります。**
 
+### Windows機能
+- **シェル**: PowerShell
+- **プロンプト**: Starshipベースの色付きプロンプト
+- **パッケージマネージャー**: Windows Package Manager（winget）統合
+- **開発ツール**: 自動インストール対応
+
+**⚠️ 注意: Windows版は現時点で未テストです。利用時は必要に応じて内容を確認しながら実行してください。**
+
 ## 要件
 
 ### macOS
@@ -227,7 +237,7 @@ bash ~/dotfiles/scripts/merge_editor_settings.sh
 - Windows Package Manager（winget）
 - パッケージダウンロード用のインターネット接続
 
-**⚠️ 注意: Windows版はテスト版です。安定性に問題がある可能性があります。**
+**⚠️ 注意: Windows版は未テストのテスト版です。安定性に問題がある可能性があります。**
 
 ## トラブルシューティング
 
@@ -238,6 +248,7 @@ bash ~/dotfiles/scripts/merge_editor_settings.sh
 3. **シェルやプロンプトが反映されない**: ターミナルを再起動するか、`source ~/.zshrc`（macOS）または`source ~/.bashrc`（Linux）を実行してください
 4. **Linuxでプロンプトに色が出ない**: `echo $TERM` が `dumb` になっていないか確認し、必要なら新しいターミナルで再接続してください。`starship` がない場合でも `.bashrc` のフォールバックプロンプトで色付き表示になります
 5. **Google Cloud SDKエラー**: Homebrew版を使用していることを確認し、Python 3.14との互換性を確認してください
+6. **Windowsでプロファイルやプロンプトが反映されない**: PowerShell を開き直し、必要なら `$PROFILE` の内容を確認してください。`starship` が未導入なら `winget install --id Starship.Starship --source winget` でも追加できます
 
 ### 手動インストール
 
