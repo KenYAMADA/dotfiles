@@ -21,6 +21,12 @@ shopt -s histappend
 # Check the window size after each command and update LINES and COLUMNS
 shopt -s checkwinsize
 
+# Some Linux terminals start bash with TERM=dumb, which causes prompt tools
+# to disable styling. Prefer a safe 256-color terminal type in that case.
+if [ -z "$TERM" ] || [ "$TERM" = "dumb" ]; then
+    export TERM=xterm-256color
+fi
+
 # Detect terminal color support early (avoid monochrome prompt/output)
 DOTFILES_HAS_COLOR=0
 if [ -t 1 ] && command -v tput > /dev/null 2>&1; then
@@ -34,6 +40,7 @@ fi
 if [ "$DOTFILES_HAS_COLOR" -eq 1 ]; then
     unset NO_COLOR
     export CLICOLOR=1
+    export CLICOLOR_FORCE=1
     [ -z "$COLORTERM" ] && export COLORTERM=truecolor
 fi
 
@@ -76,6 +83,7 @@ fi
 # Initialize prompt (Starship or fallback)
 if command -v starship > /dev/null 2>&1; then
     # Use Starship if available (modern prompt)
+    export STARSHIP_CONFIG="${STARSHIP_CONFIG:-$HOME/.config/starship.toml}"
     eval "$(starship init bash)"
 else
     # Lightweight fallback prompt for Raspberry Pi and low-resource systems
@@ -104,10 +112,10 @@ else
         WHITE='\[\033[01;37m\]'
         RESET='\[\033[00m\]'
 
-        # Set colorful prompt with git branch
-        PS1="${GREEN}\u@\h${RESET}:${BLUE}\w${YELLOW}\$(git_branch)${RESET}\$ "
+        # Set a readable two-line prompt with git branch
+        PS1="${GREEN}\u@\h${RESET} ${BLUE}\w${YELLOW}\$(git_branch)${RESET}\n${CYAN}\\$ ${RESET}"
     else
         # Simple prompt for non-color terminals
-        PS1='\u@\h:\w\$ '
+        PS1='\u@\h \w\n\$ '
     fi
 fi

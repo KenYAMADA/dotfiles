@@ -27,7 +27,7 @@ case ${OSTYPE} in
     brew bundle --file="$DOTPATH/Brewfile" # Specify the path to the Brewfile
     brew cleanup
     ;;
-  Linux*)
+  linux*)
     echo "Linux environment detected. Setting up bash-focused environment..."
 
     # Check if bash is available (should be default)
