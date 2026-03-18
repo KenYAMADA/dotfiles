@@ -9,7 +9,7 @@
 ### ユニバーサルインストーラー（推奨）
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install.sh)"
 ```
 
 これにより、OSを自動検出して適切なインストーラーを実行します。
@@ -19,7 +19,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/in
 #### macOS（Zsh + Oh My Zsh）
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install_mac.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install_mac.sh)"
 ```
 
 **機能:**
@@ -33,11 +33,12 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/in
 #### Linux（Bash中心）
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install_linux.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install_linux.sh)"
 ```
 
 **機能:**
 - 拡張設定付きBashシェル
+- Starshipによる色付きプロンプト
 - システムパッケージマネージャー統合（apt/dnf/yum/pacman）
 - 必須開発ツール
 - Linux固有の最適化
@@ -47,7 +48,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/in
 #### Windows（PowerShell中心）
 
 ```bash
-powershell -ExecutionPolicy Bypass -File https://raw.githubusercontent.com/kenyamada/dotfiles/main/install.ps1
+powershell -ExecutionPolicy Bypass -File https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install.ps1
 ```
 
 **機能:**
@@ -198,6 +199,7 @@ bash ~/dotfiles/scripts/merge_editor_settings.sh
 
 ### Linux機能
 - **シェル**: 拡張Bash設定
+- **プロンプト**: Starshipベースの色付きプロンプト（未導入時は色付きフォールバック）
 - **パッケージマネージャー**: apt/dnf/yum/pacmanサポート
 - **開発ツール**: Git、Vim、必須CLIツール
 - **GUIアプリケーション**: Zoom、Discord（GUI環境が検出された場合）
@@ -233,15 +235,16 @@ bash ~/dotfiles/scripts/merge_editor_settings.sh
 
 1. **Permission denied エラー**: スクリプトに実行権限があることを確認してください
 2. **パッケージインストール失敗**: インターネット接続とsudo権限を確認してください
-3. **シェルが変更されない**: ターミナルを再起動するか、`source ~/.zshrc`（macOS）または`source ~/.bashrc`（Linux）を実行してください
-4. **Google Cloud SDKエラー**: Homebrew版を使用していることを確認し、Python 3.14との互換性を確認してください
+3. **シェルやプロンプトが反映されない**: ターミナルを再起動するか、`source ~/.zshrc`（macOS）または`source ~/.bashrc`（Linux）を実行してください
+4. **Linuxでプロンプトに色が出ない**: `echo $TERM` が `dumb` になっていないか確認し、必要なら新しいターミナルで再接続してください。`starship` がない場合でも `.bashrc` のフォールバックプロンプトで色付き表示になります
+5. **Google Cloud SDKエラー**: Homebrew版を使用していることを確認し、Python 3.14との互換性を確認してください
 
 ### 手動インストール
 
 自動インストーラーが失敗した場合、手動でクローンしてセットアップを実行できます：
 
 ```bash
-git clone https://github.com/kenyamada/dotfiles.git ~/dotfiles
+git clone https://github.com/KenYAMADA/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 chmod +x *.sh scripts/*.sh
 ./setup.sh

@@ -2,14 +2,14 @@
 #
 # macOS-specific installer for dotfiles
 # Command to execute:
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/kenyamada/dotfiles/main/install_mac.sh)"
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/KenYAMADA/dotfiles/main/install_mac.sh)"
 #
 
 # Exit the script if an error occurs
 set -e
 
 # --- Configuration ---
-REPO_URL="https://github.com/kenyamada/dotfiles.git"
+REPO_URL="https://github.com/KenYAMADA/dotfiles.git"
 DOTPATH="$HOME/dotfiles"
 
 # --- Execution ---
