@@ -187,6 +187,11 @@ if [ -d "$_AS_JAVA" ]; then
 fi
 unset _AS_JAVA
 
+# asdf
+_asdf_sh="$(brew --prefix asdf 2>/dev/null)/libexec/asdf.sh"
+[ -f "$_asdf_sh" ] && . "$_asdf_sh"
+unset _asdf_sh
+
 # Added by Antigravity
 export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
 # OpenClaw Completion
