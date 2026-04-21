@@ -188,7 +188,9 @@ fi
 unset _AS_JAVA
 
 # asdf
-. "$(brew --prefix asdf)/libexec/asdf.sh"
+if command -v brew &>/dev/null && [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
+  . "$(brew --prefix asdf)/libexec/asdf.sh"
+fi
 
 # Added by Antigravity
 export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
