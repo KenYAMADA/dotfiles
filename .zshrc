@@ -148,6 +148,9 @@ export LANG=ja_JP.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/dotfiles/.zshrc.alias
 
+# iTerm2 Shell Integration
+# コマンドの成功/失敗マーク表示、出力範囲のクリック選択、プロンプト間ジャンプ等を有効化
+# ファイルが存在する場合のみ読み込む（未インストール環境でもエラーにならない）
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
@@ -178,3 +181,5 @@ fi
 
 # Added by Antigravity
 export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
+
+. "$(brew --prefix asdf)/libexec/asdf.sh"
