@@ -8,8 +8,8 @@ elif [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.
   source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 elif [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc' ]; then
   source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-elif [ -f '/Users/yamadaken/google-cloud-sdk/path.zsh.inc' ]; then
-  source '/Users/yamadaken/google-cloud-sdk/path.zsh.inc'
+elif [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
+  source "$HOME/google-cloud-sdk/path.zsh.inc"
 fi
 
 if [ -f '/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc' ]; then
@@ -20,8 +20,8 @@ elif [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/compl
   source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 elif [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then
   source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
-elif [ -f '/Users/yamadaken/google-cloud-sdk/completion.zsh.inc' ]; then
-  source '/Users/yamadaken/google-cloud-sdk/completion.zsh.inc'
+elif [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
+  source "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -148,16 +148,19 @@ export LANG=ja_JP.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/dotfiles/.zshrc.alias
 
+# iTerm2 Shell Integration
+# コマンドの成功/失敗マーク表示、出力範囲のクリック選択、プロンプト間ジャンプ等を有効化
+# ファイルが存在する場合のみ読み込む（未インストール環境でもエラーにならない）
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/yamadaken/.docker/completions $fpath)
+fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/yamadaken/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 
 
 
@@ -176,5 +179,13 @@ if [ -d "$HOME/.anyenv" ]; then
     fi
 fi
 
-# Added by Antigravity
-export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
+# Android StudioのJavaを優先（インストール済みの場合のみ）
+_AS_JAVA="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+if [ -d "$_AS_JAVA" ]; then
+  export JAVA_HOME="$_AS_JAVA"
+  export PATH="$JAVA_HOME/bin:$PATH"
+fi
+unset _AS_JAVA
+
+# asdf
+. "$(brew --prefix asdf)/libexec/asdf.sh"

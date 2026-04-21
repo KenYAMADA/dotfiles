@@ -2,6 +2,7 @@ tap "grishka/grishka"
 tap "lihaoyun6/tap"
 brew "act"
 brew "anyenv"
+brew "asdf"
 brew "bash"
 ## AWS CLI is now managed by a separate script.
 brew "circleci"
