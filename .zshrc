@@ -178,3 +178,7 @@ fi
 
 # Added by Antigravity
 export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
+export PATH="$PATH:/Users/ken/Library/Python/3.9/bin"
+
+# OpenClaw Completion
+source "/Users/ken/.openclaw/completions/openclaw.zsh"

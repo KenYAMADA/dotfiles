@@ -36,4 +36,4 @@ function gocover() {
   echo "generate cover.html"
 }
 
-alias claude="/Users/yamadaken/.claude/local/claude"
+#alias claude="/Users/yamadaken/.claude/local/claude"
