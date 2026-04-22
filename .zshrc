@@ -195,4 +195,4 @@ unset _asdf_sh
 # Added by Antigravity
 export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
 # OpenClaw Completion
-source "/Users/ken/.openclaw/completions/openclaw.zsh"
+[[ -f "/Users/ken/.openclaw/completions/openclaw.zsh" ]] && source "/Users/ken/.openclaw/completions/openclaw.zsh"
