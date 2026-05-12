@@ -1,4 +1,4 @@
-export PATH=$HOME/.bin:/usr/local/bin:$PATH
+export PATH=$HOME/.bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 
 # iTerm2 Shell Integration
 test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
