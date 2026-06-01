@@ -105,6 +105,8 @@ powershell -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::S
 |---|---|
 | `setup_zsh.sh` | Oh My Zsh + プラグイン + Powerlevel10k インストール |
 | `setup_claude_code.sh` | Claude Code (Anthropic CLI) インストール |
+| `setup_antigravity.sh` | Antigravity CLI インストール（macOS） |
+| `setup_codex.sh` | OpenAI Codex CLI インストール |
 | `setup_android.sh` | Android SDK CLI ツール（adb / sdkmanager / platform-tools） |
 | `setup_gcloud.sh` | Google Cloud SDK（Homebrew 版） |
 | `setup_aws.sh` | AWS CLI |
