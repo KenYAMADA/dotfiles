@@ -1,0 +1,58 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── macOS: unit tests (bats) ──────────────────────────────────────────────
+  unit:
+    name: Unit tests (macOS)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bats-core
+        run: brew install bats-core
+
+      - name: Run unit tests
+        run: bats tests/zshenv.bats tests/setup.bats tests/scripts.bats
+
+  # ── Linux: Docker integration tests ──────────────────────────────────────
+  linux-ubuntu:
+    name: Linux integration (Ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bats-core
+        run: |
+          sudo apt-get install -y bats
+
+      - name: Build Ubuntu test image
+        run: |
+          docker build -t dotfiles-test-ubuntu \
+            -f tests/docker/Dockerfile.ubuntu tests/docker/
+
+      - name: Run Ubuntu Docker tests
+        run: bats tests/linux_docker.bats --filter "ubuntu"
+
+  linux-fedora:
+    name: Linux integration (Fedora)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bats-core
+        run: |
+          sudo apt-get install -y bats
+
+      - name: Build Fedora test image
+        run: |
+          docker build -t dotfiles-test-fedora \
+            -f tests/docker/Dockerfile.fedora tests/docker/
+
+      - name: Run Fedora Docker tests
+        run: bats tests/linux_docker.bats --filter "fedora"
