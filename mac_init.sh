@@ -40,13 +40,10 @@ unset _ANYENV_ROOT
 # config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
 
-# p10k config migration note
-P10K_OLD="$HOME/.p10k.zsh"
-P10K_NEW="${XDG_CONFIG_HOME:-$HOME/.config}/p10k.zsh"
-if [ -f "$P10K_OLD" ] && [ ! -f "$P10K_NEW" ]; then
-    echo "Moving p10k config to XDG location..."
-    mv "$P10K_OLD" "$P10K_NEW"
-    echo "Moved: $P10K_OLD -> $P10K_NEW"
+# Remove legacy ~/.p10k.zsh if it exists (now managed as symlink via setup.sh)
+if [ -f "$HOME/.p10k.zsh" ] && [ ! -L "$HOME/.p10k.zsh" ]; then
+    echo "Removing legacy ~/.p10k.zsh (p10k config is now at ~/.config/p10k.zsh)"
+    rm "$HOME/.p10k.zsh"
 fi
 
 ## Google Cloud SDK setup

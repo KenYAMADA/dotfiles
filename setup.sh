@@ -112,6 +112,18 @@ fi
 ln -snf "$DOTPATH/.zshrc" "$HOME/.config/zsh/.zshrc"
 printf "    %-25s -> %s\n" "$DOTPATH/.zshrc" "$HOME/.config/zsh/.zshrc"
 
+## p10k.zsh → ~/.config/p10k.zsh (macOS only)
+case ${OSTYPE} in
+  darwin*)
+    mkdir -p "$HOME/.config"
+    if [ -e "$HOME/.config/p10k.zsh" ] && [ ! -L "$HOME/.config/p10k.zsh" ]; then
+      mv "$HOME/.config/p10k.zsh" "$HOME/.config/p10k.zsh.org"
+    fi
+    ln -snf "$DOTPATH/p10k.zsh" "$HOME/.config/p10k.zsh"
+    printf "    %-25s -> %s\n" "$DOTPATH/p10k.zsh" "$HOME/.config/p10k.zsh"
+    ;;
+esac
+
 ## dotfile
 for file in "${DOT_FILES[@]}" # Quote array for safety
 do
