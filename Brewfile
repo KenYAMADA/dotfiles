@@ -41,6 +41,11 @@ brew "zsh"
 brew "powershell"
 
 cask "alfred", args: { appdir: "/Applications" }
+brew "colima"
+brew "docker"
+brew "docker-compose"
+brew "docker-credential-helper"
+
 cask "androidtool"
 cask "antigravity"
 cask "codex"

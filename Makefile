@@ -1,3 +1,4 @@
+DOTFILES := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 .PHONY: test test-unit test-linux docker-build colima-start help
 
 # Run unit tests only (no Docker required)
@@ -16,10 +17,11 @@ test-linux: docker-build
 # Run all tests
 test: test-unit test-linux
 
-# Start Colima (lightweight local Docker daemon) if Docker Desktop is unavailable
+# Install and start Colima (lightweight local Docker daemon)
 colima-start:
-	@command -v colima >/dev/null || brew install colima
-	colima start --arch aarch64 --vm-type vz
+	@command -v colima >/dev/null || bash $(DOTFILES)/scripts/setup_colima.sh
+	@colima status 2>/dev/null | grep -q Running || \
+	  colima start --arch aarch64 --vm-type vz --vz-rosetta --cpu 4 --memory 8 --disk 60
 
 help:
 	@echo "Targets:"

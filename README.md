@@ -104,6 +104,7 @@ powershell -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::S
 | スクリプト | 用途 |
 |---|---|
 | `setup_zsh.sh` | Oh My Zsh + プラグイン + Powerlevel10k インストール |
+| `setup_colima.sh` | Colima（軽量 Docker デーモン）インストール・自動起動設定 |
 | `setup_claude_code.sh` | Claude Code (Anthropic CLI) インストール |
 | `setup_antigravity.sh` | Antigravity CLI インストール（macOS） |
 | `setup_codex.sh` | OpenAI Codex CLI インストール |
