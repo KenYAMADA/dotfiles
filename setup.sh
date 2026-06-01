@@ -24,7 +24,7 @@ case ${OSTYPE} in
     brew update && brew upgrade
     
     echo "Installing packages from Brewfile..."
-    brew bundle --file="$DOTPATH/Brewfile" # Specify the path to the Brewfile
+    brew bundle --no-upgrade --file="$DOTPATH/Brewfile"
     brew cleanup
     ;;
   linux*)

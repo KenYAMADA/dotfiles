@@ -40,29 +40,29 @@ brew "yarn"
 brew "zsh"
 brew "powershell"
 
-cask "alfred", args: { appdir: "/Applications" }
+cask "alfred", args: { appdir: "/Applications", adopt: true }
 brew "colima"
 brew "docker"
 brew "docker-compose"
 brew "docker-credential-helper"
 
-cask "androidtool"
-cask "antigravity"
-cask "codex"
-cask "cursor"
-cask "devtoys"
-cask "discord" # 追加
-cask "font-meslo-lg-nerd-font" # powerlevel10k推奨フォント
+cask "androidtool", args: { adopt: true }
+cask "antigravity", args: { adopt: true }
+cask "codex", args: { adopt: true }
+cask "cursor", args: { adopt: true, greedy: false }
+cask "devtoys", args: { adopt: true }
+cask "discord", args: { adopt: true, greedy: false }
+cask "font-meslo-lg-nerd-font"
 cask "font-hack-nerd-font"
 cask "font-hackgen"
 cask "font-hackgen-nerd"
-cask "google-cloud-sdk" # Google Cloud SDK via Homebrew
-cask "iterm2"
-cask "logoer"
-cask "neardrop"
-cask "transmit", args: { appdir: "/Applications" }
-cask "xcodes"
-cask "zoom" # 追加
+cask "google-cloud-sdk", args: { adopt: true }
+cask "iterm2", args: { adopt: true, greedy: false }
+cask "logoer", args: { adopt: true }
+cask "neardrop", args: { adopt: true }
+cask "transmit", args: { appdir: "/Applications", adopt: true }
+cask "xcodes", args: { adopt: true }
+cask "zoom", args: { adopt: true, greedy: false }
 
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
