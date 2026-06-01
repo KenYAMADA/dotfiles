@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DOTPATH="${DOTPATH:-$HOME/dotfiles}"
+
 if [ "$(uname)" != "Linux" ] ; then
 	echo "Not Linux!"
 	exit 1
