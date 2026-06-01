@@ -26,25 +26,28 @@ if [ ! -d "$HOME/.vim/bundle/Vundle.vim" ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
-# anyenv plugins are typically initialized by 'anyenv install --init' in setup.sh.
-# If you need to install additional specific plugins, uncomment and add them here.
-# anyenv install rbenv
-# anyenv install pyenv
-# anyenv install nodenv
-# anyenv install goenv
-# anyenv install jenv
-
-# anyenv update plugins
-mkdir -p $(anyenv root)/plugins
-if [ ! -d "$(anyenv root)/plugins/anyenv-update" ]; then
+# anyenv update plugins (XDG: ~/.local/share/anyenv)
+_ANYENV_ROOT="${ANYENV_ROOT:-$HOME/.local/share/anyenv}"
+mkdir -p "$_ANYENV_ROOT/plugins"
+if [ ! -d "$_ANYENV_ROOT/plugins/anyenv-update" ]; then
     echo "Cloning anyenv-update plugin..."
-    git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
+    git clone https://github.com/znz/anyenv-update.git "$_ANYENV_ROOT/plugins/anyenv-update"
 else
     echo "anyenv-update plugin already exists. Skipping clone."
 fi
+unset _ANYENV_ROOT
 
 # config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml
+
+# p10k config migration note
+P10K_OLD="$HOME/.p10k.zsh"
+P10K_NEW="${XDG_CONFIG_HOME:-$HOME/.config}/p10k.zsh"
+if [ -f "$P10K_OLD" ] && [ ! -f "$P10K_NEW" ]; then
+    echo "Moving p10k config to XDG location..."
+    mv "$P10K_OLD" "$P10K_NEW"
+    echo "Moved: $P10K_OLD -> $P10K_NEW"
+fi
 
 ## Google Cloud SDK setup
 echo "Setting up Google Cloud SDK..."

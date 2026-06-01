@@ -57,10 +57,13 @@ else
     echo "Starship is already installed."
 fi
 
+# XDG state dir for zsh history
+mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
+
 # Copy Starship configuration
 if [ -f "$HOME/dotfiles/starship.toml" ]; then
-    mkdir -p "$HOME/.config"
-    cp "$HOME/dotfiles/starship.toml" "$HOME/.config/starship.toml"
+    mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}"
+    cp "$HOME/dotfiles/starship.toml" "${XDG_CONFIG_HOME:-$HOME/.config}/starship.toml"
     echo "Starship configuration copied."
 fi
 
@@ -77,14 +80,16 @@ fi
 # anyenv install goenv
 # anyenv install jenv
 
-# anyenv update plugins
-mkdir -p $(anyenv root)/plugins
-if [ ! -d "$(anyenv root)/plugins/anyenv-update" ]; then
+# anyenv update plugins (XDG: ~/.local/share/anyenv)
+_ANYENV_ROOT="${ANYENV_ROOT:-$HOME/.local/share/anyenv}"
+mkdir -p "$_ANYENV_ROOT/plugins"
+if [ ! -d "$_ANYENV_ROOT/plugins/anyenv-update" ]; then
     echo "Cloning anyenv-update plugin..."
-    git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
+    git clone https://github.com/znz/anyenv-update.git "$_ANYENV_ROOT/plugins/anyenv-update"
 else
     echo "anyenv-update plugin already exists. Skipping clone."
 fi
+unset _ANYENV_ROOT
 
 # GitHub CLI config
 mkdir -p $HOME/.config/gh && ln -snf $HOME/dotfiles/gh/config.yml $HOME/.config/gh/config.yml

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 DOTPATH=$HOME/dotfiles
-# OS-specific dotfiles
+# OS-specific dotfiles (.zshrc is handled separately via ZDOTDIR)
 case ${OSTYPE} in
   darwin*)
-    DOT_FILES=(.bin .zshrc .zshenv .vimrc)
+    DOT_FILES=(.bin .zshenv .vimrc)
     ;;
   linux*)
-    DOT_FILES=(.bin .bashrc .vimrc)
+    DOT_FILES=(.bin .zshenv .vimrc)
     ;;
 esac
 
@@ -28,13 +28,7 @@ case ${OSTYPE} in
     brew cleanup
     ;;
   linux*)
-    echo "Linux environment detected. Setting up bash-focused environment..."
-
-    # Check if bash is available (should be default)
-    if ! command -v bash &> /dev/null; then
-      echo "Error: bash is not available. This installer requires bash." >&2
-      exit 1
-    fi
+    echo "Linux environment detected. Setting up zsh environment..."
 
     # Determine package manager and install essential packages
     INSTALL_CMD=""
@@ -73,7 +67,17 @@ case ${OSTYPE} in
       echo "Package list file not found or is empty. Skipping package installation."
     fi
 
-    echo "Bash-focused Linux setup complete."
+    # Set zsh as default shell
+    ZSH_PATH=$(command -v zsh 2>/dev/null)
+    if [ -n "$ZSH_PATH" ]; then
+      echo "Setting default shell to zsh..."
+      grep -qxF "$ZSH_PATH" /etc/shells || echo "$ZSH_PATH" | sudo tee -a /etc/shells
+      sudo chsh -s "$ZSH_PATH" "$USER"
+    else
+      echo "Warning: zsh not found. Install zsh and re-run to set as default shell." >&2
+    fi
+
+    echo "Linux zsh setup complete."
     ;;
 esac
 
@@ -89,16 +93,25 @@ case ${OSTYPE} in
     bash "$DOTPATH/scripts/setup_zsh.sh"
     ;;
   linux*)
-    ## Bash setup for Linux
-    echo "Setting up bash environment..."
-    # Create bash configuration
-    if [ ! -f "$HOME/.bashrc" ] || [ ! -L "$HOME/.bashrc" ]; then
-        echo "Creating bash configuration..."
-        # Create a basic .bashrc if it doesn't exist
-        touch "$HOME/.bashrc"
+    ## Zsh + Oh My Zsh setup for Linux
+    echo "Setting up Oh My Zsh environment..."
+    if [ ! -x "$DOTPATH/scripts/setup_zsh.sh" ]; then
+        chmod +x "$DOTPATH/scripts/setup_zsh.sh"
     fi
+    bash "$DOTPATH/scripts/setup_zsh.sh"
     ;;
 esac
+## XDG state dir for zsh history
+mkdir -p "$HOME/.local/state/zsh"
+
+## .zshrc → ~/.config/zsh/.zshrc (ZDOTDIR)
+mkdir -p "$HOME/.config/zsh"
+if [ -e "$HOME/.config/zsh/.zshrc" ] && [ ! -L "$HOME/.config/zsh/.zshrc" ]; then
+  mv "$HOME/.config/zsh/.zshrc" "$HOME/.config/zsh/.zshrc.org"
+fi
+ln -snf "$DOTPATH/.zshrc" "$HOME/.config/zsh/.zshrc"
+printf "    %-25s -> %s\n" "$DOTPATH/.zshrc" "$HOME/.config/zsh/.zshrc"
+
 ## dotfile
 for file in "${DOT_FILES[@]}" # Quote array for safety
 do
@@ -112,23 +125,23 @@ do
   fi   
 done
 
-## anyenv install
-if [ ! -d "$HOME/.anyenv" ]; then
-    git clone https://github.com/anyenv/anyenv ~/.anyenv
+## anyenv install (XDG: ~/.local/share/anyenv)
+ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/anyenv"
+if [ ! -d "$ANYENV_ROOT" ]; then
+    git clone https://github.com/anyenv/anyenv "$ANYENV_ROOT"
 fi
 
 # Ensure anyenv is available for the current script execution
-if [ -d "$HOME/.anyenv" ]; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
+if [ -d "$ANYENV_ROOT" ]; then
+    export ANYENV_ROOT
+    export PATH="$ANYENV_ROOT/bin:$PATH"
     if command -v anyenv &> /dev/null; then
         eval "$(anyenv init -)"
-        # Initialize anyenv definitions (e.g., rbenv, pyenv)
-        if [ ! -d "$(anyenv root)/plugins/anyenv-install" ]; then # Check if anyenv-install plugin is installed
+        if [ ! -d "$ANYENV_ROOT/plugins/anyenv-install" ]; then
             echo "Initializing anyenv definitions..."
             anyenv install --init
         fi
-        # Point to the correct definition root for the anyenv-install plugin
-        export ANYENV_DEFINITION_ROOT="$(anyenv root)/plugins/anyenv-install"
+        export ANYENV_DEFINITION_ROOT="$ANYENV_ROOT/plugins/anyenv-install"
     else
         echo "Warning: anyenv command not found after adding to PATH. Please check anyenv installation." >&2
     fi

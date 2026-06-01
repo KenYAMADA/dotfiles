@@ -24,10 +24,8 @@ elif [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
   source "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+# Enable Powerlevel10k instant prompt (macOS only).
+if [[ "$OSTYPE" == darwin* ]] && [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
@@ -40,16 +38,19 @@ fi
 #export PATH=$HOME/.bin:/usr/local/bin:$PATH
 
 # zsh-completions plugin setup
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+fpath+=${ZSH_CUSTOM:-${ZSH}/custom}/plugins/zsh-completions/src
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# Path to your oh-my-zsh installation ($ZSH is set in .zshenv).
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# Theme: Powerlevel10k on macOS, none on Linux (Starship handles prompt)
+case ${OSTYPE} in
+  darwin*)
+    ZSH_THEME="powerlevel10k/powerlevel10k"
+    ;;
+  linux*)
+    ZSH_THEME=""
+    ;;
+esac
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -120,6 +121,20 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Zsh options
+setopt print_eight_bit
+setopt no_flow_control
+setopt interactive_comments
+setopt auto_cd
+setopt share_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+
+# sudo 補完
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
+                   /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -146,12 +161,7 @@ export LANG=ja_JP.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/dotfiles/.zshrc.alias
-
-# iTerm2 Shell Integration
-# コマンドの成功/失敗マーク表示、出力範囲のクリック選択、プロンプト間ジャンプ等を有効化
-# ファイルが存在する場合のみ読み込む（未インストール環境でもエラーにならない）
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+source "${DOTPATH}/.zshrc.alias"
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=($HOME/.docker/completions $fpath)
@@ -166,16 +176,19 @@ export PATH="$PATH:$HOME/.lmstudio/bin"
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.config/p10k.zsh.
+case ${OSTYPE} in
+  darwin*)
+    [[ ! -f "${XDG_CONFIG_HOME}/p10k.zsh" ]] || source "${XDG_CONFIG_HOME}/p10k.zsh"
+    ;;
+esac
 
 ## anyenv
-if [ -d "$HOME/.anyenv" ]; then
-    export PATH="$HOME/.anyenv/bin:$PATH"
+if [ -d "${ANYENV_ROOT}" ]; then
+    export PATH="${ANYENV_ROOT}/bin:$PATH"
     if command -v anyenv >/dev/null 2>&1; then
         eval "$(anyenv init - zsh)"
-        # Point to the correct definition root for the anyenv-install plugin
-        export ANYENV_DEFINITION_ROOT="$(anyenv root)/plugins/anyenv-install"
+        export ANYENV_DEFINITION_ROOT="${ANYENV_ROOT}/plugins/anyenv-install"
     fi
 fi
 
@@ -192,7 +205,15 @@ _asdf_sh="$(brew --prefix asdf 2>/dev/null)/libexec/asdf.sh"
 [ -f "$_asdf_sh" ] && . "$_asdf_sh"
 unset _asdf_sh
 
-# Added by Antigravity
-export PATH="/Users/ken/.antigravity/antigravity/bin:$PATH"
+# Antigravity
+[ -d "$HOME/.antigravity/antigravity/bin" ] && export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
 # OpenClaw Completion
-[[ -f "/Users/ken/.openclaw/completions/openclaw.zsh" ]] && source "/Users/ken/.openclaw/completions/openclaw.zsh"
+[[ -f "$HOME/.openclaw/completions/openclaw.zsh" ]] && source "$HOME/.openclaw/completions/openclaw.zsh"
+
+# Starship prompt (Linux)
+case ${OSTYPE} in
+  linux*)
+    command -v starship >/dev/null && eval "$(starship init zsh)"
+    ;;
+esac

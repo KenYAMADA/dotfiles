@@ -2,6 +2,7 @@ git
 curl
 wget
 vim
+zsh
 htop
 jq
 tmux

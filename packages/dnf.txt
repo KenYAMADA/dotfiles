@@ -3,6 +3,7 @@ git
 curl
 wget
 vim-enhanced
+zsh
 htop
 jq
 tmux

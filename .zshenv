@@ -1,69 +1,49 @@
-export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/.bin:/usr/local/bin:$PATH
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-# iTerm2 Shell Integration
-test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
+# zsh config を XDG config dir へ（.zshrc を ~/.config/zsh/.zshrc で読む）
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
-# ヒストリの設定
-HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
+# Dotfiles パス
+export DOTPATH="$HOME/dotfiles"
 
-# sudo の後ろでコマンド名を補完する
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
-                   /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+# Oh My Zsh (XDG data dir)
+export ZSH="${XDG_DATA_HOME}/oh-my-zsh"
 
+# anyenv (XDG data dir)
+export ANYENV_ROOT="${XDG_DATA_HOME}/anyenv"
 
-# alias
-source ~/dotfiles/.zshrc.alias
-
-# Options
-setopt print_eight_bit  # 日本語ファイル名を表示可能にする
-setopt no_flow_control  # フローコントロールを無効にする
-setopt interactive_comments  # '#' 以降をコメントとして扱う
-setopt auto_cd  # ディレクトリ名だけでcdする
-setopt share_history  # 同時に起動したzshの間でヒストリを共有する
-setopt hist_ignore_all_dups  # 同じコマンドをヒストリに残さない
-setopt hist_ignore_space  # スペースから始まるコマンド行はヒストリに残さない
-setopt hist_reduce_blanks  # ヒストリに保存するときに余分なスペースを削除する
-
-########################################
-# OS 別の設定
+# PATH: Apple Silicon Homebrew → Intel Homebrew → .bin → .local/bin
 case ${OSTYPE} in
-    darwin*)
-        #Mac用の設定
-        export CLICOLOR=1
-        alias ls='ls -G -F'
-        ;;
-    linux*)
-        #Linux用の設定
-        alias ls='ls -F --color=auto'
-        ;;
+  darwin*)
+    export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+    ;;
 esac
+export PATH=$HOME/.bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-## Rust
-if [ -e "$HOME/.cargo/bin" ]
-then
-  export PATH=$HOME/.cargo/bin:$PATH
-fi
+# Rust
+[ -e "$HOME/.cargo/bin" ] && export PATH=$HOME/.cargo/bin:$PATH
 
-## Flutter
-if [ -e "$HOME/development/flutter/bin" ]
-then
-  export PATH=$HOME/development/flutter/bin:$PATH
-fi
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+# Flutter
+[ -e "$HOME/development/flutter/bin" ] && export PATH=$HOME/development/flutter/bin:$PATH
+export PATH="$PATH:$HOME/.pub-cache/bin"
 
-## mysql client
-if [ -e "/usr/local/opt/mysql-client/bin/bin" ]
-then
-  export PATH=/usr/local/opt/mysql-client/bin:$PATH
-fi
+# mysql client (macOS Homebrew)
+[ -e "/usr/local/opt/mysql-client/bin" ] && export PATH=/usr/local/opt/mysql-client/bin:$PATH
 
-## Android SDK
-if [ -e "$HOME/Library/Android/sdk" ]
-then
+# Android SDK
+if [ -e "$HOME/Library/Android/sdk" ]; then
   export ANDROID_HOME=$HOME/Library/Android/sdk
   export PATH=$ANDROID_HOME/tools/bin/sdkmanager:$ANDROID_HOME/tools/bin/avdmanager:$PATH
 fi
 
-export PATH=~/.local/bin:$PATH
+# History
+export HISTFILE="${XDG_STATE_HOME}/zsh/history"
+export HISTSIZE=100000
+export SAVEHIST=100000
+
+# iTerm2 Shell Integration
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
