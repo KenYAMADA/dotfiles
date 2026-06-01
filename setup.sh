@@ -124,6 +124,18 @@ case ${OSTYPE} in
     ;;
 esac
 
+## Claude Code config → ~/.claude/
+mkdir -p "$HOME/.claude"
+for file in settings.json CLAUDE.md RTK.md statusline.sh; do
+  src="$DOTPATH/claude/$file"
+  dest="$HOME/.claude/$file"
+  if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+    mv "$dest" "${dest}.org"
+  fi
+  ln -snf "$src" "$dest"
+  printf "    %-25s -> %s\n" "$src" "$dest"
+done
+
 ## dotfile
 for file in "${DOT_FILES[@]}" # Quote array for safety
 do
