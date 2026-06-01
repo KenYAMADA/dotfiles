@@ -18,6 +18,11 @@ DOTFILES="$BATS_TEST_DIRNAME/.."
   [ "$status" -eq 0 ]
 }
 
+@test "scripts/setup_claude_code.sh has no syntax errors" {
+  run bash -n "$DOTFILES/scripts/setup_claude_code.sh"
+  [ "$status" -eq 0 ]
+}
+
 @test "scripts/setup_android.sh has no syntax errors" {
   run bash -n "$DOTFILES/scripts/setup_android.sh"
   [ "$status" -eq 0 ]
