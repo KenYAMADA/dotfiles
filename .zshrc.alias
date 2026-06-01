@@ -29,6 +29,14 @@ alias python='python3'
 
 alias zenn="npx zenn"
 
+brew() {
+  if [[ "$1" == "bundle" ]] && [[ "$*" != *"--no-upgrade"* ]]; then
+    command brew bundle --no-upgrade "${@:2}"
+  else
+    command brew "$@"
+  fi
+}
+
 function gocover() {
   go test -cover $1 -coverprofile=cover.out
   go tool cover -html=cover.out -o cover.html
