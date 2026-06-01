@@ -25,14 +25,20 @@ esac
 export PATH=$HOME/.bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Rust
-[ -e "$HOME/.cargo/bin" ] && export PATH=$HOME/.cargo/bin:$PATH
+if [ -e "$HOME/.cargo/bin" ]; then
+  export PATH=$HOME/.cargo/bin:$PATH
+fi
 
 # Flutter
-[ -e "$HOME/development/flutter/bin" ] && export PATH=$HOME/development/flutter/bin:$PATH
+if [ -e "$HOME/development/flutter/bin" ]; then
+  export PATH=$HOME/development/flutter/bin:$PATH
+fi
 export PATH="$PATH:$HOME/.pub-cache/bin"
 
 # mysql client (macOS Homebrew)
-[ -e "/usr/local/opt/mysql-client/bin" ] && export PATH=/usr/local/opt/mysql-client/bin:$PATH
+if [ -e "/usr/local/opt/mysql-client/bin" ]; then
+  export PATH=/usr/local/opt/mysql-client/bin:$PATH
+fi
 
 # Android SDK (Android Studio 優先、なければ standalone)
 if [ -e "$HOME/Library/Android/sdk" ]; then
@@ -47,7 +53,9 @@ fi
 
 # Android command-line tools (Homebrew)
 _android_cmdline="$(brew --prefix 2>/dev/null)/share/android-commandlinetools/bin"
-[ -d "$_android_cmdline" ] && export PATH="$_android_cmdline:$PATH"
+if [ -d "$_android_cmdline" ]; then
+  export PATH="$_android_cmdline:$PATH"
+fi
 unset _android_cmdline
 
 # History
@@ -56,4 +64,6 @@ export HISTSIZE=100000
 export SAVEHIST=100000
 
 # iTerm2 Shell Integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+if [ -e "${HOME}/.iterm2_shell_integration.zsh" ]; then
+  source "${HOME}/.iterm2_shell_integration.zsh"
+fi

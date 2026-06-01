@@ -56,9 +56,9 @@ _run_in_container() {
 @test "[ubuntu] XDG variables are set correctly" {
   if ! docker info &>/dev/null 2>&1; then skip "Docker unavailable"; fi
   run _run_in_container dotfiles-test-ubuntu \
-    zsh -c "source /home/testuser/dotfiles/.zshenv && \
-            echo XDG_CONFIG_HOME=\$XDG_CONFIG_HOME && \
-            echo XDG_DATA_HOME=\$XDG_DATA_HOME && \
+    zsh -c "source /home/testuser/dotfiles/.zshenv
+            echo XDG_CONFIG_HOME=\$XDG_CONFIG_HOME
+            echo XDG_DATA_HOME=\$XDG_DATA_HOME
             echo XDG_STATE_HOME=\$XDG_STATE_HOME"
   [ "$status" -eq 0 ]
   [[ "$output" == *"XDG_CONFIG_HOME=/home/testuser/.config"* ]]
@@ -69,7 +69,7 @@ _run_in_container() {
 @test "[ubuntu] ZDOTDIR points to ~/.config/zsh" {
   if ! docker info &>/dev/null 2>&1; then skip "Docker unavailable"; fi
   run _run_in_container dotfiles-test-ubuntu \
-    zsh -c "source /home/testuser/dotfiles/.zshenv && echo \$ZDOTDIR"
+    zsh -c "source /home/testuser/dotfiles/.zshenv; echo \$ZDOTDIR"
   [ "$status" -eq 0 ]
   [ "$output" = "/home/testuser/.config/zsh" ]
 }
@@ -77,7 +77,7 @@ _run_in_container() {
 @test "[ubuntu] HISTFILE points to XDG state dir" {
   if ! docker info &>/dev/null 2>&1; then skip "Docker unavailable"; fi
   run _run_in_container dotfiles-test-ubuntu \
-    zsh -c "source /home/testuser/dotfiles/.zshenv && echo \$HISTFILE"
+    zsh -c "source /home/testuser/dotfiles/.zshenv; echo \$HISTFILE"
   [ "$status" -eq 0 ]
   [ "$output" = "/home/testuser/.local/state/zsh/history" ]
 }
@@ -108,8 +108,8 @@ _run_in_container() {
 @test "[fedora] XDG variables are set correctly" {
   if ! docker info &>/dev/null 2>&1; then skip "Docker unavailable"; fi
   run _run_in_container dotfiles-test-fedora \
-    zsh -c "source /home/testuser/dotfiles/.zshenv && \
-            echo XDG_CONFIG_HOME=\$XDG_CONFIG_HOME && \
+    zsh -c "source /home/testuser/dotfiles/.zshenv
+            echo XDG_CONFIG_HOME=\$XDG_CONFIG_HOME
             echo XDG_DATA_HOME=\$XDG_DATA_HOME"
   [ "$status" -eq 0 ]
   [[ "$output" == *"XDG_CONFIG_HOME=/home/testuser/.config"* ]]
