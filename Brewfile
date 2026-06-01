@@ -56,12 +56,12 @@ cask "font-meslo-lg-nerd-font"
 cask "font-hack-nerd-font"
 cask "font-hackgen"
 cask "font-hackgen-nerd"
-cask "google-cloud-sdk", args: { adopt: true }
+cask "gcloud-cli", args: { adopt: true }
 cask "iterm2", args: { adopt: true, greedy: false }
 cask "logoer", args: { adopt: true }
 cask "neardrop", args: { adopt: true }
 cask "transmit", args: { appdir: "/Applications", adopt: true }
-cask "xcodes", args: { adopt: true }
+cask "xcodes-app", args: { adopt: true }
 cask "zoom", args: { adopt: true, greedy: false }
 
 mas "GarageBand", id: 682658836
