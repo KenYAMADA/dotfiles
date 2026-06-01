@@ -1,0 +1,13 @@
+FROM fedora:40
+
+RUN dnf install -y \
+    zsh git curl wget vim sudo python3 \
+    && dnf clean all
+
+RUN useradd -m -s /bin/bash testuser && \
+    echo "testuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    echo "/usr/bin/zsh" >> /etc/shells
+
+USER testuser
+ENV HOME=/home/testuser
+WORKDIR /home/testuser
