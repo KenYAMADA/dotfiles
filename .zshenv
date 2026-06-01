@@ -34,11 +34,21 @@ export PATH="$PATH:$HOME/.pub-cache/bin"
 # mysql client (macOS Homebrew)
 [ -e "/usr/local/opt/mysql-client/bin" ] && export PATH=/usr/local/opt/mysql-client/bin:$PATH
 
-# Android SDK
+# Android SDK (Android Studio 優先、なければ standalone)
 if [ -e "$HOME/Library/Android/sdk" ]; then
-  export ANDROID_HOME=$HOME/Library/Android/sdk
-  export PATH=$ANDROID_HOME/tools/bin/sdkmanager:$ANDROID_HOME/tools/bin/avdmanager:$PATH
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+elif [ -e "$HOME/.android/sdk" ]; then
+  export ANDROID_HOME="$HOME/.android/sdk"
 fi
+if [ -n "$ANDROID_HOME" ]; then
+  export ANDROID_SDK_ROOT="$ANDROID_HOME"
+  export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin:$PATH"
+fi
+
+# Android command-line tools (Homebrew)
+_android_cmdline="$(brew --prefix 2>/dev/null)/share/android-commandlinetools/bin"
+[ -d "$_android_cmdline" ] && export PATH="$_android_cmdline:$PATH"
+unset _android_cmdline
 
 # History
 export HISTFILE="${XDG_STATE_HOME}/zsh/history"

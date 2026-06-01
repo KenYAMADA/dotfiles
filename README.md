@@ -104,6 +104,7 @@ powershell -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::S
 | スクリプト | 用途 |
 |---|---|
 | `setup_zsh.sh` | Oh My Zsh + プラグイン + Powerlevel10k インストール |
+| `setup_android.sh` | Android SDK CLI ツール（adb / sdkmanager / platform-tools） |
 | `setup_gcloud.sh` | Google Cloud SDK（Homebrew 版） |
 | `setup_aws.sh` | AWS CLI |
 | `setup_heroku.sh` | Heroku CLI |
