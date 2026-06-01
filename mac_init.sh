@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DOTPATH="${DOTPATH:-$HOME/dotfiles}"
+
 if [ "$(uname)" != "Darwin" ] ; then
 	echo "Not macOS!"
 	exit 1
