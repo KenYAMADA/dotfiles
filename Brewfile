@@ -44,6 +44,7 @@ cask "alfred", args: { appdir: "/Applications" }
 cask "androidtool"
 cask "antigravity"
 cask "codex"
+cask "cursor"
 cask "devtoys"
 cask "discord" # 追加
 cask "font-meslo-lg-nerd-font" # powerlevel10k推奨フォント
