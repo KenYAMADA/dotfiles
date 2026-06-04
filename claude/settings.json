@@ -1,9 +1,4 @@
 {
-  "autoUpdatesChannel": "stable",
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  },
   "hooks": {
     "PreToolUse": [
       {
@@ -16,5 +11,15 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true,
+    "context7@claude-plugins-official": true
+  },
+  "autoUpdatesChannel": "stable",
+  "skipAutoPermissionPrompt": true
 }
