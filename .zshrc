@@ -217,3 +217,16 @@ case ${OSTYPE} in
     command -v starship >/dev/null && eval "$(starship init zsh)"
     ;;
 esac
+
+# Local tool integrations
+_antigravity_ide_bin="$HOME/.antigravity-ide/antigravity-ide/bin"
+[ -d "$_antigravity_ide_bin" ] && export PATH="$_antigravity_ide_bin:$PATH"
+unset _antigravity_ide_bin
+
+_local_env="$HOME/.local/bin/env"
+[ -f "$_local_env" ] && source "$_local_env"
+unset _local_env
+
+_browser_use_bin="$HOME/.browser-use-env/bin"
+[ -d "$_browser_use_bin" ] && export PATH="$_browser_use_bin:$PATH"
+unset _browser_use_bin
