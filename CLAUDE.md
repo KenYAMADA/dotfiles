@@ -79,6 +79,7 @@ These are not run automatically — invoke manually as needed:
 | `setup_gcloud.sh` | Google Cloud SDK (Homebrew, Python 3.14 compatibility) |
 | `setup_aws.sh` | AWS CLI setup |
 | `setup_heroku.sh` | Heroku CLI setup |
+| `setup_gh.sh` | GitHub CLI (`gh`) setup |
 | `setup_node.sh` | Node.js via nvm |
 | `setup_zsh.sh` | Oh My Zsh installation |
 | `setup_editor_fonts.sh` | Configure MesloLGS NF font in VSCode, Cursor, Windsurf |

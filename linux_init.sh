@@ -28,6 +28,10 @@ echo "Detected CPU architecture as ${ARCH_TYPE}."
 ## To install them, run:
 ## bash ~/dotfiles/scripts/setup_gcloud.sh
 
+## GitHub CLI is now managed by a separate script.
+## To install it, run:
+## bash ~/dotfiles/scripts/setup_gh.sh
+
 ## Starship prompt installation
 if ! command -v starship > /dev/null 2>&1; then
     echo "Installing Starship prompt..."
