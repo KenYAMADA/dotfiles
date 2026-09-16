@@ -59,6 +59,10 @@ bash "$DOTPATH/scripts/setup_gcloud.sh"
 ## To install it, run:
 ## bash ~/dotfiles/scripts/setup_heroku.sh
 
+## GitHub CLI is now managed by a separate script.
+## To install it, run:
+## bash ~/dotfiles/scripts/setup_gh.sh
+
 ## Font configuration is now managed by separate scripts.
 ## To set up fonts, run:
 ## bash ~/dotfiles/scripts/setup_vscode_fonts.sh
