@@ -23,6 +23,9 @@ case ${OSTYPE} in
     echo "run brew update & upgrade ..."
     brew update && brew upgrade
     
+    echo "Trusting custom taps used by the Brewfile..."
+    brew trust grishka/grishka lihaoyun6/tap 2>&1 || true
+
     echo "Installing packages from Brewfile..."
     brew bundle --no-upgrade --file="$DOTPATH/Brewfile"
     brew cleanup
@@ -160,12 +163,12 @@ if [ -d "$ANYENV_ROOT" ]; then
     export ANYENV_ROOT
     export PATH="$ANYENV_ROOT/bin:$PATH"
     if command -v anyenv &> /dev/null; then
+        export ANYENV_DEFINITION_ROOT="$ANYENV_ROOT/plugins/anyenv-install"
         eval "$(anyenv init -)"
-        if [ ! -d "$ANYENV_ROOT/plugins/anyenv-install" ]; then
+        if [ ! -d "$ANYENV_DEFINITION_ROOT" ]; then
             echo "Initializing anyenv definitions..."
             anyenv install --init
         fi
-        export ANYENV_DEFINITION_ROOT="$ANYENV_ROOT/plugins/anyenv-install"
     else
         echo "Warning: anyenv command not found after adding to PATH. Please check anyenv installation." >&2
     fi
