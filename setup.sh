@@ -23,6 +23,9 @@ case ${OSTYPE} in
     echo "run brew update & upgrade ..."
     brew update && brew upgrade
     
+    echo "Trusting custom taps used by the Brewfile..."
+    brew trust grishka/grishka lihaoyun6/tap 2>&1 || true
+
     echo "Installing packages from Brewfile..."
     brew bundle --no-upgrade --file="$DOTPATH/Brewfile"
     brew cleanup
