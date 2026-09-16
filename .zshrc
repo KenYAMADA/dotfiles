@@ -187,8 +187,8 @@ esac
 if [ -d "${ANYENV_ROOT}" ]; then
     export PATH="${ANYENV_ROOT}/bin:$PATH"
     if command -v anyenv >/dev/null 2>&1; then
-        eval "$(anyenv init - zsh)"
         export ANYENV_DEFINITION_ROOT="${ANYENV_ROOT}/plugins/anyenv-install"
+        eval "$(anyenv init - zsh)"
     fi
 fi
 
